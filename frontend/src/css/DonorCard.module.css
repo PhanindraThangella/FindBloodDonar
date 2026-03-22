@@ -1,0 +1,67 @@
+.card{
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-family: Arial;
+    margin: 20px 70px;
+    border-left: 5px solid #610606;
+    border-right: 5px solid #610606;
+}
+.card p{
+    padding:0px;
+    margin:12px;
+}
+.card h2{   
+    text-align:center;
+}
+.cardsContainer {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 450px 450px;
+    grid-template-rows: 300px 300px;
+    overflow-y: auto;
+    margin-left:300px;
+}
+.detailsbtn
+{
+    width:150px;
+    height:40px;
+    border-radius:25px;
+    border:2px solid #610606;
+    background-color: #610606;
+    color:White;
+    font-size:1rem;
+    padding:10px 10px;
+    float:right; 
+    transition: 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 115, 230, 0.3);
+    font-weight:bold;
+    margin:0px;
+}
+.detailsbtn:hover{
+    background: #610606;
+    transform: scale(1.08);
+    box-shadow: 0px 6px 12px rgba(0, 91, 181, 0.4);
+}
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #555;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

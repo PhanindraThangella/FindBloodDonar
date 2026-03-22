@@ -1,0 +1,85 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* transparent black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* above everything else */
+  /* pointer-events: auto; */
+  flex-direction:column;
+}
+.formDiv{
+    display:block;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #ffffff;
+    padding: 30px 40px;
+    /* border-radius: 45px 0px 45px 0px; */
+    /* box-shadow: 0 4px 20px rgba(161, 8, 8, 0.5); */
+    z-index: 10;
+    width: 500px;
+    /* max-width: 90%; */
+     max-height: 90vh;
+    font-family: Arial, sans-serif;
+    overflow-y:auto;
+}
+.regInput{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.normalBorder {
+  border: 1px solid #ccc;
+}
+.errorBorder {
+  border: 1px solid red;
+}
+.regLabel{
+    display:block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #444;
+}
+.formDiv select{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.radioInput{
+    display:inline;
+}
+.radioLabel{
+    display:inline;
+    padding:10px;
+}
+.formh1{
+    text-align: center;
+    margin-top:0px;
+}
+.formp{
+    color:red;
+}
+.buttonSubmit
+{
+    width:100%;
+    height:40px;
+    background-color: #610606;
+    Color:white;
+    font-size: 22px;
+    font-weight:bold;
+    border-radius:20px;
+}

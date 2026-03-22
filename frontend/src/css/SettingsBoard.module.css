@@ -1,0 +1,84 @@
+.mainDiv{
+    display:flex;
+    background-color: black;
+    height:100vh;
+}
+.settingsDiv{
+    width:94%;
+    /* height:230px; */
+    margin:70px 30px;
+    background-color: rgba(255,255,255,0.2);
+    backdrop-filter:blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    border-radius:30px;
+}
+.switch {
+  position:relative;
+  display:inline-block;
+  width: 60px;
+  height: 28px;
+  margin:20px 20px 20px 380px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.sliderRound {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.sliderRound:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .sliderRound {
+  background-color: #ccc;
+}
+input:focus + .sliderRound {
+  box-shadow: 0 0 1px #f5f5f5;
+}
+input:checked + .sliderRound:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(26px);
+}
+.sliderRound{
+  border-radius: 34px;
+}
+.sliderRound:before {
+  border-radius: 50%;
+}
+.notificationLabel{
+    width:189px;
+    Color:white;
+    margin:20px 40px;
+}
+.eachNotificationDiv{
+    /* background-color:aqua; */
+    width:800px;
+    height: 80px;
+    display:flex;
+    flex-direction: row;
+    margin-left:40px;
+}
+.notifTag
+{
+    color:White;
+    margin-left:40px;
+}

@@ -1,0 +1,38 @@
+
+.lognavbar
+{
+    width:500px;
+    height:60px;
+    position:fixed;
+    margin-top:60px;
+    margin-left:440px;
+    display:block;
+}
+.loginbtn{
+    width:200px;
+    height:40px;
+    border-radius: 0 20px 0px 20px;
+    border:0;
+    margin-left:20px;
+    background-color: #610606;
+    Color:white;
+    font-size:22px;
+    font-weight: bold;
+}
+.signUpbtn{
+    width:200px;
+    height:40px;
+    border-radius: 10px 0px 10px 0px;
+    border:0;
+    margin-left:20px;
+    background-color: #610606;
+    Color:white;
+    float:right;
+    margin-right:40px;
+    font-size:22px;
+    font-weight: bold;
+}
+.lognavbar button:hover{
+    cursor:pointer;
+}
+

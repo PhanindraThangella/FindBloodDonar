@@ -1,0 +1,66 @@
+.profileContainer{
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    height:100%;
+}
+.sidenavbar{
+    width:20%;
+    height:100vh;
+    background-color: black;
+    border-right: 6px solid rgb(189, 186, 186);
+}
+.listContainer
+{
+    list-style-type:none;
+    padding:20px;
+}
+.listContainer li{
+    font-size: 16px;
+    font-family:'Open Sans';
+    font-weight:400;
+    padding:20px;
+    color:white;
+    display: flex;
+    align-items: center; /* ✅ centers icon and text */
+    gap: 10px;
+}
+.username {
+  max-width: 230px;       
+  word-wrap: break-word;  
+  white-space: normal;    
+  line-height: 1.2;   
+  margin: 20px 20px;    
+  font-size: 20px;
+  color:white;
+}
+.logoutbutton
+{
+    font-family: 'Open Sans';
+    font-size:16px;
+    color:white;
+    position:fixed;
+    bottom:0;
+    font-weight: 400;
+    padding:20px;
+    margin-left:20px;
+    list-style-type: none;
+}
+.logoutli{
+    display: flex;
+    align-items: center; /* ✅ centers icon and text */
+    gap: 10px;
+}
+a{
+    text-decoration: none;
+    padding-left:16px;
+    color:white;
+}
+a:hover{
+    cursor:pointer;
+}
+.mainContent{
+    width:80%;
+    height:100vh;   
+    overflow-y: auto;
+}

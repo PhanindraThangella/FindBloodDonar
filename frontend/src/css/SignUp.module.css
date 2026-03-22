@@ -1,0 +1,54 @@
+.signupdiv {
+    display: block;
+    position: fixed;
+    top: 127px;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 45px 0px 45px 0px;
+    box-shadow: 0 4px 20px rgba(161, 8, 8, 0.5);
+    z-index: 10;
+    width: 400px;
+    max-width: 90%;
+    font-family: Arial, sans-serif;
+}
+
+.signupdiv h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.signupdiv label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #444;
+}
+
+.signupdiv input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.signupdiv button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #610606;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signupdiv button[type="submit"]:hover {
+    background-color: #610606;
+}

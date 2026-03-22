@@ -1,0 +1,14 @@
+const express = require('express');
+const {getUser,storeUser, getAccess,updateProfile,getUsers}=require('../controllers/userControllers');
+const storeFullDetailsOfUser =require('../controllers/userFullDetailsController');
+const sendGmailToDonor =require('../controllers/sendGmail');
+const authenticateUser = require('../middleware/auth');
+const userRouter=express.Router();
+userRouter.get('/user',authenticateUser,getUser);
+userRouter.post('/add-user',storeUser); 
+userRouter.post('/addDetailsOfUser',authenticateUser,storeFullDetailsOfUser);
+userRouter.post('/Login',getAccess);
+userRouter.post('/UpdateProfile',authenticateUser,updateProfile);
+userRouter.post('/send-email-to-donor',authenticateUser,sendGmailToDonor);
+userRouter.get('/users',authenticateUser,getUsers);
+module.exports = userRouter;
