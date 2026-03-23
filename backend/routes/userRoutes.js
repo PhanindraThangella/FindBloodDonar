@@ -3,6 +3,7 @@ const {getUser,storeUser, getAccess,updateProfile,getUsers}=require('../controll
 const storeFullDetailsOfUser =require('../controllers/userFullDetailsController');
 const sendGmailToDonor =require('../controllers/sendGmail');
 const authenticateUser = require('../middleware/auth');
+const { storeGeoLocation } = require('../controllers/geoLocationControllers');
 const userRouter=express.Router();
 userRouter.get('/user',authenticateUser,getUser);
 userRouter.post('/add-user',storeUser); 
@@ -11,4 +12,5 @@ userRouter.post('/Login',getAccess);
 userRouter.post('/UpdateProfile',authenticateUser,updateProfile);
 userRouter.post('/send-email-to-donor',authenticateUser,sendGmailToDonor);
 userRouter.get('/users',authenticateUser,getUsers);
+userRouter.post('/user/storegeoLocation',authenticateUser,storeGeoLocation);
 module.exports = userRouter;

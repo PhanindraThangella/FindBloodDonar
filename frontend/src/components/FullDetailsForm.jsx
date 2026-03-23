@@ -172,6 +172,8 @@ function FullDetailsForm(){
 const districts = Object.keys(data);
   const navigate=useNavigate();
   const [error,setError]=useState(false);
+  const [grantLocation,setGrantLocation]=useState(false);
+  const [denyLocation,setDenyLocation]=useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -185,27 +187,70 @@ const districts = Object.keys(data);
     houseno:"",
     landmark:""
   });
-  const [location,setLocation]=useState({latitude:null,longitude:null}); 
   const [cities, setCities] = useState([]);
-
-  const getLocation=()=>
-  {
-    if(navigator.geolocation)
-    {
-      navigator.geolocation.getCurrentPosition(
-        (position)=>{
-          const {latitude,longitude}=position.coords;
-          setLocation({latitude,longitude}); 
+  const token=localStorage.getItem("token");
+ const sendNavigatorLocation = () => {
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      const resultState= await sendToBackend(latitude,longitude);
+      setGrantLocation(resultState.success);
+    });
+  };
+  const sendToBackend=async(latitude,longitude)=>{
+    const res=await fetch("http://localhost:5000/api/user/storegeoLocation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // 👈 IMPORTANT
         },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser.");
+        body: JSON.stringify({
+          location: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+        }),
+      });
+      const data=await res.json();
+      return data;
+  }
+  const sendFallBackLocation=()=>{
+    let flag=false;
+    const address1 = `${formData.houseno}, ${formData.city}, ${formData.district},${"Andhra Pradesh"}`;
+    const address2 = `${formData.city}, ${formData.district},${"Andhra Pradesh"}`;
+    getCoordsFromAddress(address1)
+    .then(async(result)=>{
+      flag=true;
+      const resultState= await sendToBackend(result.latitude,result.longitude);
+      setDenyLocation(resultState.success);
+    }).catch((err)=>{
+        console.error(err.message);
+      });
+    if(!flag){
+      getCoordsFromAddress(address2)
+      .then(async(result)=>{
+        const resultState= await sendToBackend(result.latitude,result.longitude);
+        setDenyLocation(resultState.success);
+      }).catch((err)=>{
+        console.error(err.message);
+      });
+    }
+  }
+  const getCoordsFromAddress = async (address) => {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
+    );
+
+    const data = await res.json();
+
+    if (!data || data.length === 0) {
+      throw new Error("Address not found");
     }
 
-    }
+    return {
+      latitude: parseFloat(data[0].lat),
+      longitude: parseFloat(data[0].lon),
+    };
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -313,6 +358,15 @@ const districts = Object.keys(data);
                     <input className={styles.regInput} name="houseno" value={formData.houseno} onChange={handleChange} type="text" id="houseNo" required></input>
                     <label className={styles.regLabel} htmlFor="landmark">Nearest LandMark</label>
                     <input className={styles.regInput} name="landmark" value={formData.landmark} onChange={handleChange} type="text" id="landmark" placeholder='Near PostOffice,Near Shivalayam,etc.'required></input>
+                    <label className={styles.regLabel} htmlFor="geolocation">Location Access</label>
+                    <span><p className={styles.smallpara}>*Allow only if you are in permanent location(Home,Office,etc,.)</p></span>
+                    {grantLocation &&(<p style={{color:"green",marginLeft:10,fontSize:22,fontWeight:500}}><span class="material-symbols-outlined">task_alt</span> Access Granted</p>)
+                    }
+                    {(!grantLocation && !denyLocation) &&(<div>
+                      <span><button className={styles.buttonAllow} type="button" onClick={sendNavigatorLocation} >Allow</button></span>
+                      <span><button className={styles.buttonDeny} type="button" onClick={sendFallBackLocation} >Deny</button></span></div>)
+                    }
+                    {denyLocation &&(<p style={{color:"orange"}}>Accurate location helps in connecting people nearby!.</p>)}
                     {error && <p style={{color:"red",margin:0,textDecoration:'none'}}>Email Already Exsists</p>}
                     <button className={styles.buttonSubmit} type="submit">Submit</button>
                 </form>
