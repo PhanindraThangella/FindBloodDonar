@@ -1,6 +1,7 @@
 const User = require('../models/userRegScheema');
 const userBloodDetailsSchema = require('../models/userBloodDetailsSchema');
-const userTotalDetailsSchema = require('../models/userTotalDetailsSchema');
+// const userTotalDetailsSchema = require('../models/userTotalDetailsSchema');
+const userCoordinatesDetailsSchema = require('../models/userCoordinatesDetailsSchema');
 const bcrypt =require('bcrypt');
 const jwt=require('jsonwebtoken');
 const getUser=async(req,res)=>{
@@ -10,7 +11,40 @@ const getUser=async(req,res)=>{
 };
 const getUsers=async(req,res)=>{
   const group=req.query.group;
-  const result=await userTotalDetailsSchema.find({BloodGroup:group},{StudentName:1,Age:1,BloodGroup:1,City:1,Gender:1,_id:0});
+   const userId = req.user.userId;
+    // ✅ Step 1: Get current user's location
+    const currentUser = await userCoordinatesDetailsSchema.findOne({ userId });
+    if (!currentUser) {
+      return res.status(404).json({ error: "User location not found" });
+    }
+    const [lng, lat] = currentUser.location.coordinates;
+    const nearbyUsers = await userCoordinatesDetailsSchema.find({
+      userId: { $ne: userId }, // exclude self
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+          $maxDistance: 5000, // 5 km
+        },
+      },
+    }).select("userId");
+   const nearbyUserIds = nearbyUsers.map(u => u.userId);
+  const result = await userBloodDetailsSchema.find(
+    {
+      BloodGroup: group,
+      UserId: { $in: nearbyUserIds }
+    },
+    {
+      Name: 1,
+      Age: 1,
+      BloodGroup: 1,
+      City: 1,
+      Gender: 1,
+      _id: 0
+    }
+  );
   res.json(result);
 }
 const storeUser=async(req,res)=>{
