@@ -1,12 +1,23 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
 import styles from '../css/Authorization.module.css';
 import Login from './Login';
 import SignUp from "./SignUp";
 function Authorization(){
     //State Declaration for validation and Athentication
-    const [isLogin,setIsLogin]=useState(true);
+    const {flag}=useParams();
+    const [isLogin,setIsLogin]=useState(false);
     const [isSignup,setIsSignup]=useState(false);
-
+    useEffect(()=>{
+        if(flag==="login"){
+            setIsLogin(true);
+            setIsSignup(false);
+        }
+        else{
+            setIsLogin(false);
+            setIsSignup(true);
+        }
+    },[])
     const handleLoginClick=()=>{
         setIsLogin(true);
         setIsSignup(false);

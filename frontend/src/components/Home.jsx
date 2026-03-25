@@ -1,29 +1,31 @@
 import styles from "../css/Home.module.css";
 import logo from "../assets/BG.jpg";
+import { Link, useNavigate } from "react-router-dom";
 import heroSectonImage from "../assets/heroImage.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightToBracket,faUserPlus,faArrowRightLong,fa1 } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightToBracket,faUserPlus,faArrowRightLong,faEnvelope,faPhone,faLocationDot,faUserShield,faListCheck,faComments } from '@fortawesome/free-solid-svg-icons';
+import { faInstagram,faLinkedin,faSquareFacebook,faYoutube } from '@fortawesome/free-brands-svg-icons';
 function Home() {
+  const navigate=useNavigate();
   return (
     <div>
       {/* Navbar */}
       <nav className={styles.navbar}>
         <div className={styles.logoDiv}>
             <img className={styles.logoImg} src={logo} alt="logo"></img>
-            <h2 className={styles.logo}>Blood Donars</h2>
+            <h2 className={styles.logo} onClick={()=>{navigate("/")}}>Blood Donars</h2>
         </div>
         <div className={styles.navLinks}>
           <a href="#">Register Yourself</a>
-          <a href="#">About Us</a>
-          <a href="#">
+          <a href="#aboutus">About Us</a>
+          <Link to="/Auth/login">
             <FontAwesomeIcon icon={faArrowRightToBracket} style={{color: "#c92f3b",marginRight:4}} />
             Login
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/Auth/signup">
             <FontAwesomeIcon icon={faUserPlus} style={{color: "#c92f3b",marginRight:4}} />
             Sign Up
-          </a>
-          {/* <button className={styles.emergencyBtn}>Emergency</button> */}
+          </Link>
         </div>
       </nav>
 
@@ -46,7 +48,7 @@ function Home() {
                 Location-based matching.
                 </p>
 
-                <button className={styles.ctaBtn}>
+                <button className={styles.ctaBtn} onClick={() => navigate("/dashboard")}>
                 Find Donors
                 <FontAwesomeIcon icon={faArrowRightLong} style={{color: "rgb(255, 255, 255)",marginLeft:6}} />
                 </button>
@@ -109,28 +111,28 @@ function Home() {
 
         <div className={styles.steps}>
             <div>
-                <h3><FontAwesomeIcon icon={fa1} style={{color: "#c92f3b",}} />Create Account</h3>
+                <h3><span class="material-symbols-outlined" style={{color:"#c92f3b"}}>counter_1</span> <span style={{position:"relative",top:-4}}>Create Account</span></h3>
                 <p>Register with us, so that you can connect with our large pool of donors.</p>
             </div>
             <div>
-                <h3>Search</h3>
+                <h3><span class="material-symbols-outlined" style={{color:"#c92f3b"}}>counter_2</span> <span style={{position:"relative",top:-4}}>Search</span></h3>
                 <p>Enter the required blood group and search we will find the near by donors.</p>
             </div>
 
             <div>
-                <h3>Connect</h3>
+                <h3><span class="material-symbols-outlined" style={{color:"#c92f3b"}}>counter_3</span> <span style={{position:"relative",top:-4}}>Connect</span></h3>
                 <p>View nearby donors and contact instantly through whatsapp or email.</p>
             </div>
 
             <div>
-                <h3>Save Life</h3>
+                <h3><span class="material-symbols-outlined" style={{color:"#c92f3b"}}>counter_4</span> <span style={{position:"relative",top:-4}}>Save life</span></h3>
                 <p>Get help quickly and save precious lives. Right help at right time makes you GOD.</p>
             </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className={styles.testimonials}>
+      <section id="aboutus" className={styles.testimonials}>
         <h2>What People Say</h2>
 
         <div className={styles.testimonialGrid}>
@@ -147,19 +149,72 @@ function Home() {
             </p>
             <h4>- Priya</h4>
           </div>
+
+          <div className={styles.testimonialCard}>
+            <p>
+              "I found a donor with a rare blood group within minutes during an emergency. A must try platform in emergency."
+            </p>
+            <h4>- Raju</h4>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className={styles.cta}>
-        <h2>Be a Hero Today ❤️</h2>
-        <p>Your one donation can save multiple lives.</p>
-        <button>Register as Donor</button>
+        <div className={styles.ctaRegisterDonor}>
+          <h2>Be a Hero Today ❤️</h2>
+          <p>Your one donation can save multiple lives.</p>
+          <button onClick={()=>{navigate("/Form")}}>Register as Donor</button>
+        </div>
+        <div className={styles.subscribeNewsLetter}>
+          <h2>Want to know our Stories,<br></br>Subscribe Now!.<br></br><span>Get weekly newsletter of our acheivements.</span></h2>
+          <input type="email" placeholder="Example@gmail.com"></input>
+          <button>Subscribe</button>
+        </div>
       </section>
 
-      {/* Footer */}
       <footer className={styles.footer}>
-        <p>© 2026 BloodConnect | Saving Lives Together ❤️</p>
+        <div className={styles.footerContainer}>
+
+          {/* Brand */}
+          <div className={styles.footerSection}>
+            <h2 className={styles.logo}>Blood Donars</h2>
+            <p>
+              Connecting donors<br></br> And <br></br>saving lives through <br></br>"<span style={{color:"#c92f3b",display:"inline"}}> Technology </span>"
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div className={styles.footerSection}>
+            <h3>Social Media</h3>
+            <span><FontAwesomeIcon icon={faInstagram} style={{color: "rgb(255, 16, 90)",}} /><a href="#">Instagram</a></span>
+            <span><FontAwesomeIcon icon={faLinkedin} style={{color: "rgb(30, 14, 254)",}} /><a href="#">Linked In</a></span>
+            <span><FontAwesomeIcon icon={faSquareFacebook} style={{color: "rgb(30, 14, 254)",}} /><a href="#">Facebook</a></span>
+            <span><FontAwesomeIcon icon={faYoutube} style={{color: "rgb(254, 14, 14)",}} /><a href="#">Youtube</a></span>
+          </div>
+
+          {/* Contact */}
+          <div className={styles.footerSection}>
+            <h3>Contact</h3>
+            <p><FontAwesomeIcon icon={faEnvelope} style={{color: "rgb(173, 5, 7)",}} />    Email: support@bloodconnect.com</p>
+            <p><FontAwesomeIcon icon={faPhone} style={{color: "rgb(48, 98, 234)",}} />    Phone: +91 98765 43210</p>
+            <p><FontAwesomeIcon icon={faLocationDot} style={{color: "rgb(254, 14, 14)",}} />  Location: India</p>
+          </div>
+
+          {/* Legal */}
+          <div className={styles.footerSection}>
+            <h3>Legal</h3>
+            <span><FontAwesomeIcon icon={faUserShield} style={{color: "rgb(133, 211, 255)",}} /><a href="#">Privacy Policy</a></span>
+            <span><FontAwesomeIcon icon={faListCheck} style={{color: "rgb(7, 234, 15)",}} /><a href="#">Terms & Conditions</a></span>
+            <span><FontAwesomeIcon icon={faComments} style={{color: "rgb(254, 14, 14)",}} /><a href="#">FAQ</a></span>
+          </div>
+
+        </div>
+
+        {/* Bottom */}
+        <div className={styles.footerBottom}>
+          <p>© 2026 Blood Donars | All Rights Reserved ❤️</p>
+        </div>
       </footer>
     </div>
   );

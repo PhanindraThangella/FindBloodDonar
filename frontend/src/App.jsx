@@ -15,7 +15,7 @@ function App() {
   <AuthProvider>
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/Dashboard/:group' element={
+      <Route path='/dashboard' element={
             <PrivateRoute>
               <DetailsDashboard />
             </PrivateRoute>
@@ -25,7 +25,7 @@ function App() {
               <ContactInfoForm/>
             </PrivateRoute>
               }/>
-      <Route path='/Auth' element={<Authorization/>}/>
+      <Route path='/Auth/:flag' element={<Authorization/>}/>
       <Route path='/ResetPassword' element={<ResetPassword/>}/>
       <Route path='/Form' element={
             <PrivateRoute>
