@@ -38,7 +38,7 @@
   color: #c92f3b;
 }
 
-.searchBar input {
+.searchBar select {
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -71,6 +71,13 @@
   background-color: white;
   color:#c92f3b;
   border:1px solid #c92f3b;
+}
+.logoutIcon{
+  color: "rgb(255, 255, 255)";
+  margin-left:8px;
+}
+.logoutIcon:hover{
+  color:#c92f3b;
 }
 
 /* LAYOUT */
@@ -141,13 +148,14 @@
   font-size: 14px;
 }
 .profileMenu{
-  position:absolute;
-  bottom:0;
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0,0,0,0.5);
+}
+.profileMenu:hover{
+  cursor: pointer;
 }
 .profileImage{
+  margin-left: 15px;
   width:40px;
   height:40px;
   border-radius: 50%;
@@ -155,4 +163,19 @@
 }
 .profileMenu a{
   padding-top:10px;
+  padding-left:3px;
+  color:black;
+}
+.rightNav{
+  display: flex;
+  flex-direction: row;
+}
+.detailsbtn{
+  padding:8px 16px;
+  width:120px;
+  height:40px;
+  background-color: #c92f3b;
+  color:white;
+  border-radius: 10px;
+  border:none;
 }
