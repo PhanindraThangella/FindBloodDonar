@@ -1,15 +1,21 @@
 import logo from "../assets/BG.jpg";
 import axios from 'axios';
-import {useState} from 'react';
+import {useState,useMemo} from 'react';
 import { motion } from 'framer-motion';
 import styles from "../css/DetailsDashboard.module.css";
+import FullDetailCard from './FullDetailCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRightFromBracket,faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 function DetailsDashboard(){
     const [selectedOption,setSelectedOption]=useState("");
     const [selectedUserIndex,setSelectedUserIndex]=useState(null);
+    const [sort,setSort]=useState("");
     const [users,setUsers]=useState([]);
     const [error,setError] = useState('');
+    const {setUser}=useAuth();
+    const navigate=useNavigate();
     const fetchUsersData=()=>{
         axios.get("http://localhost:5000/api/users", {
             params:{
@@ -26,6 +32,23 @@ function DetailsDashboard(){
             setError("Failed to fetch data!");
         });
         console.log(users);
+    }
+    const sortedUsers = useMemo(() => {
+        if(!users || users === 0) return [];
+        if (sort === 'SortByAge') {
+          return [...users].sort((a, b) => a.Age - b.Age);
+        } else if (sort === 'OnlyMale') {
+          return [...users].filter(user=>user.Gender==="Male");
+        }
+         else if (sort === 'OnlyFemale') {
+          return [...users].filter(user=>user.Gender==="Female");
+        }
+        return users;
+      }, [sort,users]);
+    const handleLogout=()=>{
+        setUser(null);
+        localStorage.clear();
+        navigate("/");
     }
 
     return(
@@ -58,12 +81,12 @@ function DetailsDashboard(){
                 </div>
 
                 <div className={styles.rightNav}>
-                    <button className={styles.logoutBtn}>Logout
+                    <button className={styles.logoutBtn} onClick={handleLogout}>Logout
                         <span><FontAwesomeIcon icon={faArrowRightFromBracket} className={styles.logoutIcon} /></span>
                     </button>
                     <div className={styles.profileMenu}>
                         <div className={styles.profileImage}></div>
-                        <a href="#">Profile</a>
+                        <a onClick={()=>{navigate("/Profile")}}>Profile</a>
                     </div>
                 </div>
             </div>
@@ -77,9 +100,9 @@ function DetailsDashboard(){
                     <a href="#">Only Specified</a>
                     <a href="#">Substitute BloodGroup</a>
                     <a href="#">Contact All</a>
-                    <a href="#">Sort By Age</a>
-                    <a href="#">Only Male</a>
-                    <a href="#">Only Female</a>
+                    <a href="#" onClick={()=>{setSort("SortByAge");console.log(sortedUsers)}}>Sort By Age</a>
+                    <a href="#" onClick={()=>{setSort("OnlyMale");console.log(sortedUsers.length)}}>Only Male</a>
+                    <a href="#" onClick={()=>{setSort("OnlyFemale");console.log(sortedUsers)}}>Only Female</a>
                 </div>
                 </div>
 
@@ -111,38 +134,45 @@ function DetailsDashboard(){
                         </div>
                     </div>
                     }
-                    {users.length > 0 && (
-                    <div className={styles.cards}>
-                        {users.map((user, index) => (
-                        <motion.div
-                            className={styles.card}
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: index * 0.1 }}
-                        >
-                            <h2>{user.StudentName}</h2>
-                            <p><strong>Age:</strong> {user.Age}</p>
-                            <p><strong>Blood Group:</strong> {user.BloodGroup}</p>
-                            <p><strong>City:</strong> {user.City}</p>
-                            <p><strong>Gender:</strong> {user.Gender}</p>
+                    {sortedUsers.length > 0 && (
+                        <div className={styles.cardsContainer}>
+                            <div className={styles.userscards}>
+                                {sortedUsers.map((user, index) => (
+                                <motion.div
+                                    className={styles.userscard}
+                                    key={index}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                                >
+                                    <h3>{user.Name}</h3>
+                                    <p><strong>Age:</strong> {user.Age}</p>
+                                    <p><strong>Blood Group:</strong> {user.BloodGroup}</p>
+                                    <p><strong>City:</strong> {user.City}</p>
+                                    <p><strong>Gender:</strong> {user.Gender}</p>
 
-                            <button
-                            className={styles.detailsbtn}
-                            onClick={() => setSelectedUserIndex(index)}
-                            >
-                            View Details
-                            </button>
+                                    <button
+                                    className={styles.usersdetailsbtn}
+                                    onClick={() => {setSelectedUserIndex(index);console.log(index);}}
+                                    >
+                                    View Details
+                                    </button>
 
-                            {selectedUserIndex === index && (
-                            <FullDetailCard
-                                user={user}
-                                onClose={() => setSelectedUserIndex(null)}
-                            />
-                            )}
-                        </motion.div>
-                        ))}
-                    </div>
+                                    {selectedUserIndex === index && (
+                                    <FullDetailCard
+                                        user={user}
+                                        onClose={() => setSelectedUserIndex(null)}
+                                    />
+                                    )}
+                                </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    {sortedUsers.length==0 && selectedOption &&(
+                        <div style={{width:"90vh",margin:"auto",backgroundColor:"white",height:180,borderRadius:10,textAlign:"center"}}>
+                            <h1 style={{marginTop:30}}> No Users Found,Sorry for the inconvenience.</h1>
+                        </div>
                     )}
                 </div>
             </div>

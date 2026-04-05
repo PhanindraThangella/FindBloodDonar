@@ -38,10 +38,13 @@ const getUsers=async(req,res)=>{
     },
     {
       Name: 1,
+      Email: 1,
       Age: 1,
       BloodGroup: 1,
       City: 1,
       Gender: 1,
+      DateOfBirth: 1,
+      Landmark: 1,
       _id: 0
     }
   );
@@ -132,4 +135,32 @@ const updateProfile=async(req,res)=>{
     res.status(400).json({message:"Update Failed."});
   }
 }
-module.exports = { getUser, storeUser, getAccess, updateProfile, getUsers  };
+const updatePassword=async(req,res)=>{
+  const email=req.body.email;
+  const password=req.body.newPassword;
+  try{
+    const user= await User.findOne({Email:email});
+    if(!user)
+    {
+      return res.status(401).json({ error: 'Invalid Email' });
+    }
+    const salt= await bcrypt.genSalt(12);
+    const hashPass=await bcrypt.hash(password,salt);
+    const actionData=await User.updateOne(
+      {Email:email},
+      {
+        $set:{
+          Password:hashPass
+        }
+      }
+    )
+    if(actionData)
+    {
+      return res.status(200).json({ message: "Password updated successfully" });
+    }
+  }
+  catch(error){
+    res.status(400).json({message:"Backend Server Issue."});
+  }
+}
+module.exports = { getUser, storeUser, getAccess, updateProfile, getUsers,updatePassword  };

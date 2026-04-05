@@ -7,7 +7,7 @@
     background-color: #ffffff;
     padding: 30px 40px;
     border-radius: 45px 0px 45px 0px;
-    box-shadow: 0 4px 20px rgba(161, 8, 8, 0.5);
+    box-shadow: 0 4px 20px #c92f3b;
     z-index: 10;
     width: 400px;
     max-width: 90%;
@@ -40,7 +40,7 @@
 .signupdiv button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #610606;
+    background-color: #c92f3b;
     color: white;
     font-size: 16px;
     border: none;
@@ -50,5 +50,7 @@
 }
 
 .signupdiv button[type="submit"]:hover {
-    background-color: #610606;
+    background-color: white;
+    color:#c92f3b;
+    border:1px solid #c92f3b;
 }

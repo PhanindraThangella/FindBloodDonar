@@ -43,26 +43,28 @@
 .userdata{
     display: flex;
     flex-direction: row;
-    height:250px;
+    height:220px;
+    /* width:calc(100vh-200px); */
     margin-top:10px;
     /* border: 2px solid red; */
 }
 .userImg{
     /* border: 2px solid blue; */
+    border-radius: 50%;
     width:200px;
     height:200px;
     overflow:hidden;
 }
 .userImg img
 {
-    height:100%;
-    width:100%;
-    object-fit: cover   ;
+    height:200px;
+    width:200px;
+    /* object-fit: cover; */
 }
 .userdetails{
     /* border: 2px solid black; */
-    height:250px;
-    margin-left:50px;
+    height:220px;
+    margin-left:15px;
 }
 .popupbtn{
     /* border: 2px solid green; */
@@ -79,7 +81,8 @@
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
     border:0px;
-    margin-left:80px;
+    border-radius: 10px;
+    margin-left:60px;
 }
 .mailbtn
 {
@@ -91,6 +94,7 @@
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
     border:0px;
+    border-radius: 10px;
     margin-left:40px;
 }
 .whatsappbtn,.mailbtn:hover{

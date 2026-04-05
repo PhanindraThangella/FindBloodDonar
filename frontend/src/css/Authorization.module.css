@@ -1,11 +1,10 @@
 
 .lognavbar
 {
-    width:500px;
     height:60px;
     position:fixed;
     margin-top:60px;
-    margin-left:440px;
+    margin-left:0px;
     display:block;
 }
 .loginbtn{
@@ -13,8 +12,8 @@
     height:40px;
     border-radius: 0 20px 0px 20px;
     border:0;
-    margin-left:20px;
-    background-color: #610606;
+    margin-left:320px;
+    background-color: #c92f3b;
     Color:white;
     font-size:22px;
     font-weight: bold;
@@ -25,7 +24,7 @@
     border-radius: 10px 0px 10px 0px;
     border:0;
     margin-left:20px;
-    background-color: #610606;
+    background-color: #c92f3b;
     Color:white;
     float:right;
     margin-right:40px;
@@ -35,4 +34,10 @@
 .lognavbar button:hover{
     cursor:pointer;
 }
-
+.backthbtn{
+    color:black;
+    position:relative;
+    top:0;
+    left:0;
+    padding:2px;
+}

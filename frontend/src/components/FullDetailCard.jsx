@@ -1,6 +1,7 @@
 import styles from '../css/FullDetailCard.module.css';
-import usermenimg from "../assets/profile-men.png";
-import userwomenimg from "../assets/profile-women.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import {useEffect} from'react';
 function FullDetailCard({user, onClose}){
@@ -15,6 +16,9 @@ function FullDetailCard({user, onClose}){
     };
     }, []);
     const navigate=useNavigate();
+    const formattedName = user.Name.split(' ').join('+');
+    const size=200;
+    const avatarUrl = `https://ui-avatars.com/api/?name=${formattedName}&background=random&color=fff&size=${size}&bold=true`;
 return(
     <div>
         <div className={styles.overlay}>
@@ -22,19 +26,22 @@ return(
                 <span className={styles.closebtn} onClick={onClose}>X</span>
                     <div className={styles.userdata}>
                         <div className={styles.userImg}>
-                            <img src={user.Gender === "Male"?usermenimg:userwomenimg}/>
+                            {/* <img src={user.Gender === "Male"?usermenimg:userwomenimg}/> */}
+                            <img src={avatarUrl} alt={`${user.Name}'s profile`}/>
                         </div>
                         <div className={styles.userdetails}>
-                            <h4 className={styles.h4tags}>{user.StudentName}</h4>
-                            <h4 className={styles.h4tags}>Age: {user.Age}</h4>
-                            <h4 className={styles.h4tags}>Gender: {user.Gender}</h4>
-                            <h4 className={styles.h4tags}>BloodGroup: {user.BloodGroup}</h4>
-                            <h4 className={styles.h4tags}>City: {user.City}</h4>
+                            <h3>{user.Name}</h3>
+                            <p><strong>Age:</strong> {user.Age}</p>
+                            <p><strong>Gender:</strong> {user.Gender}</p>
+                            <p><strong>Blood Group:</strong> {user.BloodGroup}</p>
+                            <p><strong>Date Of Birth:</strong> {user.DateOfBirth}</p>
+                            <p><strong>City:</strong> {user.City}</p>
+                            <p><strong>Landmark:</strong> {user.Landmark}</p>
                         </div>
                     </div>
                     <div className={styles.popupbtn}>
-                        <button className={styles.whatsappbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'whatsapp'}})}>Whatsapp</button>
-                        <button className={styles.mailbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'mail'}})}>Mail</button>
+                        <button className={styles.whatsappbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'whatsapp'}})}><FontAwesomeIcon icon={faWhatsapp} style={{color: "rgb(255, 255, 255)",marginRight:4}} />Whatsapp</button>
+                        <button className={styles.mailbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'mail',email:user.Email}})}><FontAwesomeIcon icon={faEnvelope} style={{color: "rgb(255, 255, 255)",marginRight:4}} />Mail</button>
                     </div>
             </div>
         </div>

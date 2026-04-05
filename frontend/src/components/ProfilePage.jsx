@@ -1,6 +1,6 @@
 
 import styles from "../css/ProfilePage.module.css";
-import {Power,LayoutDashboard,Settings,HandHelping,MessageSquareMore} from 'lucide-react';
+import {Power,LayoutDashboard,Settings,HandHelping,MessageSquareMore,ArrowLeft} from 'lucide-react';
 import ProfileDashboard from "./ProfileDashboard";
 import ContributionsBoard from "./ContributionsBoard";
 import RequestsBoard from "./RequestsBoard";
@@ -50,20 +50,21 @@ function ProfilePage(){
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setUser(null);
-        navigate('/Auth');
+        navigate('/');
     }
     return(
         <div className={styles.profileContainer}>
             <div className={styles.sidenavbar}>
-                <p className={styles.username}>{user.name}</p>
+                {/* <p className={styles.username}>{user.name}</p> */}
                 <ul className={styles.listContainer}>
-                    <li><LayoutDashboard size={16} color="#ffffff" strokeWidth={2.5} /><a href="#" onClick={handleDashboard} >DashBoard</a></li>
-                    <li><HandHelping size={16} color="#ffffff" strokeWidth={2.5} /> <a href="#" onClick={handleContributions}>Contributions</a></li>
-                    <li><MessageSquareMore size={16} color="#ffffff" strokeWidth={2.5} /> <a href="#" onClick={handleRequests}>Recent Requests</a></li>
-                    <li><Settings size={16} color="#ffffff" strokeWidth={2.5} /><a href="#" onClick={handleSettings}> Settings</a></li>
+                    <li><ArrowLeft size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={()=>{navigate("/dashboard")}} >Back To Home</a></li>
+                    <li><LayoutDashboard size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={handleDashboard} >DashBoard</a></li>
+                    <li><HandHelping size={16} color="#ffffff" strokeWidth={2.5} /> <a onClick={handleContributions}>Contributions</a></li>
+                    <li><MessageSquareMore size={16} color="#ffffff" strokeWidth={2.5} /> <a onClick={handleRequests}>Recent Requests</a></li>
+                    <li><Settings size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={handleSettings}> Settings</a></li>
                 </ul>
                 <ul className={styles.logoutbutton}>
-                <li className={styles.logoutli} ><Power size={16} color="#ffffff" strokeWidth={2.5} /><a href='#' onClick={handleLogout}>Logout</a></li>
+                <li className={styles.logoutli} ><Power size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={handleLogout}>Logout</a></li>
                 </ul>
             </div>
             <div className={styles.mainContent}>

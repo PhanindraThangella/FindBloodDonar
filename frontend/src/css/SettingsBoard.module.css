@@ -1,13 +1,14 @@
 .mainDiv{
     display:flex;
-    background-color: black;
+    background-color: #edf2f7;
     height:100vh;
 }
 .settingsDiv{
     width:94%;
     /* height:230px; */
     margin:70px 30px;
-    background-color: rgba(255,255,255,0.2);
+    /* background-color: rgba(255,255,255,0.2); */
+    background-color: white;
     backdrop-filter:blur(10px);
     border: 1px solid rgba(255,255,255,0.3);
     box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
@@ -66,7 +67,7 @@ input:checked + .sliderRound:before {
 }
 .notificationLabel{
     width:189px;
-    Color:white;
+    /* Color:white; */
     margin:20px 40px;
 }
 .eachNotificationDiv{
@@ -79,6 +80,5 @@ input:checked + .sliderRound:before {
 }
 .notifTag
 {
-    color:White;
-    margin-left:40px;
+    margin: 40px 0px 20px 40px;
 }

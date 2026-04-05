@@ -6,7 +6,9 @@ export default function PrivateRoute({ children }) {
   const location = useLocation();
 
   if (!user && !localStorage.getItem("token")) {
-    return <Navigate to="/Auth" replace state={{ from: location }} />;
+    console.log(!user);
+    console.log(localStorage.getItem("token"))
+    return <Navigate to="/Auth/login" replace state={{ from: location }} />;
   }
   return children;
 }

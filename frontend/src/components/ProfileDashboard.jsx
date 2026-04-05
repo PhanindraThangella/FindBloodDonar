@@ -64,11 +64,16 @@ function ProfileDashboard()
         }
         setLoading(false);
     }
+     const formattedName = data.Name?.split(' ').join('+');
+    const size=200;
+    const avatarUrl = `https://ui-avatars.com/api/?name=${formattedName}&background=random&color=fff&size=${size}&bold=true`;
     return(
         <>
         <div className={styles.mainContainer}>
             <div className={styles.topNotch}>
-                <div className={styles.imageDiv}></div>
+                <div className={styles.imageDiv}>
+                    <img src={avatarUrl} alt={`${data.Name}'s profile`}/>
+                </div>
                 <div className={styles.donatedDiv}>
                     <h4>Blood Donated</h4>
                     <p className={styles.number}>{data.BloodDonated}</p>

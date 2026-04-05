@@ -2,7 +2,7 @@
     display:flex;
     flex-direction: column;
     /* background-color: #989EA7; */
-    background-color: black;
+    background-color: #edf2f7;
     width:100%;
     /* height:100%; */
 }
@@ -10,11 +10,11 @@
     width:94%;
     height:230px;
     border-radius: 30px;
-    /* background-color: white; */
+    background-color: white;
     margin:30px;
     display:flex;
     flex-direction: row;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    /* background-color: rgba(255, 255, 255, 0.2); Semi-transparent white */
     backdrop-filter: blur(10px); /* Adjust blur intensity as needed */
     border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow  */
@@ -23,9 +23,9 @@
     width:94%;
     /* height:600px; */
     border-radius:30px;
-    /* background-color: white; */
+    background-color: white;
     margin:0px 30px 30px 30px;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    /* background-color: rgba(255, 255, 255, 0.2); Semi-transparent white */
     backdrop-filter: blur(10px); /* Adjust blur intensity as needed */
     border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow  */
@@ -75,19 +75,24 @@
     background-color: grey;
     border-radius:50%;
     margin:8px 10px 8px 60px;
-    border: 6px solid white;
+    border: 6px solid black;
+}
+.imageDiv img{
+    width: 188px;
+    height:188px;
+    border-radius:50%;
 }
 .donatedDiv{
     width:200px;
     height:160px;
-    background-color: black;
+    background-color: #1d3557;
     border-radius:30px;
     margin:30px 10px 10px 100px;
 }
 .receivedDiv{
     width:200px;
     height:160px;
-    background-color: black;
+    background-color: #c92f3b;
     border-radius:30px;
     margin:30px 10px 10px 100px;
 }
@@ -109,6 +114,7 @@
     padding:0px;
 }
 h4{
+    margin-top: 15px;
     text-align:center;
     color:white;
     font-family: "Open Sans";
@@ -129,7 +135,7 @@ h4{
     font-weight:600;
     line-height: 1.5;
     margin:20px 40px 20px 40px;
-    color:white;
+    /* color:white; */
 }
 .inputElement{
     background-color: rgba(255, 255, 255, 0.2);
@@ -145,7 +151,8 @@ h4{
     font-weight: 400;
 }
 .active{
-    color:white;
+    /* color:#c92f3b; */
+    border:1px solid #21c700;
 }
 hr{
     width:82%;
