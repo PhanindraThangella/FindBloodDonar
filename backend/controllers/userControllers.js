@@ -45,6 +45,7 @@ const getUsers=async(req,res)=>{
       Gender: 1,
       DateOfBirth: 1,
       Landmark: 1,
+      UserId:1,
       _id: 0
     }
   );

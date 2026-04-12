@@ -1,12 +1,19 @@
 import styles from '../css/ContactInfoForm.module.css';
 import {useNavigate,useLocation} from 'react-router-dom';
 import {useState} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck,faCircleXmark,faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 function ContactInfoForm(){
     const navigate=useNavigate();
     const location = useLocation();
     const sendState = location.state?.sendState;
     const receiverEmail=location.state?.email;
-    const [formData,setFormData]=useState({name:"",hospitalname:"",contactnumber:"",address:"",receiveremail:receiverEmail});
+    const senderuserId=location.state?.receiverUserId;
+    const [formData,setFormData]=useState({name:"",hospitalname:"",contactnumber:"",address:"",receiveremail:receiverEmail,receiverUserId:senderuserId});
+    const [isVisible, setIsVisible] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isFailed, setIsFailed] = useState(false);
+    const [message,setMessage]=useState("");
     const handleChange = (e) => {
     setFormData((prev) => ({
         ...prev,
@@ -15,34 +22,104 @@ function ContactInfoForm(){
     };
     const sendMessage=async(e)=>
     {
+        setIsVisible(true);
+        setMessage("Sending...");
         e.preventDefault();
         if(sendState==='mail')
         {
-            console.log("send mail");
-            try {
-            const res = await fetch("http://localhost:5000/api/send-email-to-donor", {
-                method: "POST",
-                
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json" 
-            },
-                body: JSON.stringify(formData)
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                // setError(true);
-                // setLoading(false);
-                return;
-            } 
+            var res;
+            try 
+            {
+                res = await fetch("http://localhost:5000/api/send-email-to-donor", {
+                    method: "POST",
+                    
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json" 
+                    },
+                    body: JSON.stringify(formData)
+                });
+                console.log(res);
+                if(res.status==200)
+                {
+                    setMessage("Success");
+                    setIsSuccess(true);
+                    setIsFailed(false);
+                    setTimeout(()=>{
+                        setMessage("Redirecting.");
+                    },800);
+                    setTimeout(()=>{
+                        setMessage("Redirecting..");
+                    },1200);
+                    setTimeout(()=>{
+                        setMessage("Redirecting...");
+                    },1600);
+                    setTimeout(() => {
+                        navigate("/dashboard");
+                    }, 2000);
+                }
+                else{
+                    console.log(res);
+                    setMessage("Failed");
+                    setIsFailed(true);
+                    setIsSuccess(false);
+                }
+            }
+            catch(error)
+            {
+                console.log(error);
+                setMessage("Failed");
+                setIsFailed(true);
+                setIsSuccess(false);
+            }
         }
-        catch (error) {
-            // setError(true);
-        } finally {
-        // setLoading(false);
+        else if(sendState==='notification')
+        {
+            var res;
+            try 
+            {
+                res = await fetch("http://localhost:5000/api/user/sendNotification", {
+                    method: "POST",
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json" 
+                    },
+                    body: JSON.stringify(formData)
+                });
+                if(res.status==200)
+                {
+                    setMessage("Success");
+                    setIsSuccess(true);
+                    setIsFailed(false);
+                    setTimeout(()=>{
+                        setMessage("Redirecting.");
+                    },800);
+                    setTimeout(()=>{
+                        setMessage("Redirecting..");
+                    },1200);
+                    setTimeout(()=>{
+                        setMessage("Redirecting...");
+                    },1600);
+                    setTimeout(() => {
+                        navigate("/dashboard");
+                    }, 2000);
+                }
+                else{
+                    setMessage("Failed");
+                    setIsFailed(true);
+                    setIsSuccess(false);
+                }
+            }
+            catch(error)
+            {
+                setMessage("Failed");
+                setIsFailed(true);
+                setIsSuccess(false);
+            }
         }
-    }
+    };
+     const closeModal=()=>{
+        setIsVisible(!isVisible);
+        setIsSuccess(false);
+        setIsFailed(false);
     };
 return(
     <>
@@ -58,7 +135,35 @@ return(
                 <input type="hidden" id="receiveremail" name="receiveremail" value={formData.receiveremail} onChange={handleChange} required/>
                 <button type="submit">Submit</button>
             </form>
-        </div>       
+        </div>
+        {isVisible && 
+            <div className={styles.modaloverlay}>
+                <div className={styles.modal}>
+                    <span className={styles.modalCloseBtn} onClick={closeModal}>X</span>
+                    <div className={styles.modalMain}>
+                        {!isSuccess && !isFailed &&(
+                            <>
+                                <FontAwesomeIcon icon={faPaperPlane} className={styles.modalSending} />
+                                <p className={styles.modalMessage}>{message}</p>
+                            </>
+                        )}
+                        {isSuccess && (
+                            <>
+                                <FontAwesomeIcon icon={faCircleCheck} className={styles.modalSuccess} />
+                                <p className={styles.modalMessage}>{message}</p>
+                            </>
+                        )}
+                        {isFailed && (
+                            <>
+                                <span className={`material-symbols-outlined ${styles.modalInvalid}`}>error </span>
+                                <p className={styles.modalMessage}> {message}</p>
+                            </>
+                        )}
+
+                    </div>
+                </div>
+            </div>
+        }   
     </>
 );
 }

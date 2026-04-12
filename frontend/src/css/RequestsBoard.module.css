@@ -27,3 +27,31 @@
     text-align: center;
     margin-top:15px;
 }
+.requestcard{
+    display:flex;
+    flex-direction: row;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 980px;
+    height:70px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-family: Arial;
+    transition: 0.3s;
+    margin:30px;
+}
+.requestcard:hover {
+  transform: translateY(-5px);
+}
+
+.requestcard p {
+  margin: 12px 0;
+  padding:0px 30px;
+}
+.requestCards{
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width:100%;
+}

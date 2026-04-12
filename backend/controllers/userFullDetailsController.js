@@ -1,6 +1,6 @@
 const userBloodDetailsSchema = require('../models/userBloodDetailsSchema');
 const storeFullDetailsOfUser =async(req,res)=>{
-    const {name,email,phonenumber,dob,age,bloodgroup,gender,district,city,houseno,landmark}=req.body;
+    const {name,email,phonenumber,dob,age,bloodgroup,gender,district,city,houseno,landmark,weight,bloodpressure,bloodsugar,badhabits,generalthings,contest}=req.body;
     const UserExsists= await userBloodDetailsSchema.findOne({Email:email});
     if(UserExsists)
     {
@@ -18,7 +18,13 @@ const storeFullDetailsOfUser =async(req,res)=>{
         District:district,
         City:city,
         HouseNo:houseno,
-        Landmark:landmark
+        Landmark:landmark,
+        Weight:weight,
+        BloodPressure:bloodpressure,
+        BloodSugar:bloodsugar,
+        Badhabits:badhabits,
+        Generalthings:generalthings,
+        Contest:contest
     });
     if(data)
     {

@@ -1,36 +1,14 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* transparent black */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999; /* above everything else */
-  /* pointer-events: auto; */
-  flex-direction:column;
-}
 .formDiv{
-    display:block;
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translate(-50%);
     background-color: #ffffff;
     padding: 30px 40px;
     /* border-radius: 45px 0px 45px 0px; */
     /* box-shadow: 0 4px 20px rgba(161, 8, 8, 0.5); */
     z-index: 10;
-    width: 500px;
-    /* max-width: 90%; */
-     max-height: 90vh;
     font-family: Arial, sans-serif;
     overflow-y:auto;
 }
 .regInput{
-    width: 100%;
+    width:400px;
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 8px;
@@ -45,13 +23,12 @@
   border: 1px solid red;
 }
 .regLabel{
-    display:block;
     margin-bottom: 6px;
     font-weight: bold;
     color: #444;
 }
 .formDiv select{
-    width: 100%;
+    width:400px;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -68,25 +45,53 @@
 }
 .formh1{
     text-align: center;
-    margin-top:0px;
+    margin-top:5px;
+    margin-bottom: 10px;
 }
 .formp{
     color:red;
 }
 .buttonSubmit
 {
-    width:100%;
+    margin-left:200px;
+    width:400px;
     height:40px;
-    background-color: #610606;
+    background-color: #c92f3b;
     Color:white;
     font-size: 22px;
-    font-weight:bold;
-    border-radius:20px;
+    /* font-weight:bold; */
+    border-radius:10px;
+    border:none;
 }
 .buttonSubmit:hover{
-    color:black;
-    background-color: grey;
+    color:#c92f3b;
+    background-color: white;
     cursor:pointer;
+    border:1px solid #c92f3b;
+}
+.buttonGoHome
+{
+    margin-left:40px;
+    width:400px;
+    height:40px;
+    background-color: #00e676;
+    Color:white;
+    font-size: 22px;
+    /* font-weight:bold; */
+    border-radius:10px;
+    border:none;
+}
+.buttonGoHome:hover{
+    color:#00e676;
+    background-color: white;
+    cursor:pointer;
+    border:1px solid #00e676;
+}
+.buttonSubmit:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    border: none;
 }
 .buttonAllow{
     margin-left:20px;
@@ -122,4 +127,113 @@
 }
 .success{
     color:green;
+}
+.formSection {
+  margin-top:10px;
+  background-color: #f5f5e6; /* The light tint from your image */
+  border: none;
+  padding: 20px;
+  margin-bottom: 25px; /* Space between the blocks */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.sectionTitle {
+  color: #0077b5; /* Blue header text */
+  font-weight: bold;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 22px;
+}
+.gridRow2{  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+}
+.genderrb{
+    margin-top:10px;
+}
+.contestGrid{
+    display:flex;
+    flex-direction: row;
+    margin-top:15px;
+}
+.contestLabel{
+    margin-left:10px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #444;
+}
+.contestInput{
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Modal css starts from here */
+.overlay{
+    position: fixed !important;
+    z-index: 99999 !important;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background: rgba(160, 159, 159, 0.5);
+}
+.modal{
+    display: block;
+    position:relative;
+    top:40%;
+    left:37%;
+    width:300px;
+    height: 120px;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 1000;
+}
+.modalCloseBtn{
+    width:20px;
+    height: 20px;
+    border-radius: 50%;
+    border:1px solid black;
+    float:right;
+    margin-right:10px;
+    margin-top:10px;
+    text-align:center;
+    color:white;
+    background-color: black;
+    font-weight: 700px;
+}
+.modalCloseBtn:hover{
+    cursor: pointer;
+    background-color: white;
+    color:black;
+}
+.modalSuccess{
+    color: rgb(7, 234, 15);
+    width:50px;
+    height:50px;
+    margin-top:40px;
+    margin-left:30px;
+}
+.modalMessage{
+    margin-top:50px;
+    margin-left:20px;
+    font-size: 26px;
+}
+.modalMain{
+    display: flex;
+    flex-direction: row;
+}
+.modalInvalid{
+    color: #EA3323;
+    font-size: 64px; 
+    font-variation-settings: 'opsz' 48;
+    margin-top:30px;
+    margin-left:30px;
 }

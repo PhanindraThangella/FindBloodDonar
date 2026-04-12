@@ -19,10 +19,42 @@ const sendGmailToDonor=async(req,res)=>
     };
 
     try {
-        await transporter.sendMail(mailOptions);
-        res.send({ success: true, message: 'Email sent successfully!' });
+        const info=await transporter.sendMail(mailOptions);
+        console.log(info);
+        if(info.accepted.length){
+            res.status(200).send({ success: true, message: 'Email sent successfully!' });
+        }
+        if(info.rejected.length){
+            res.status(503).send({ success: false, message: 'Failed to sent Email!' });
+        }
     } catch (error) {
         res.status(500).send({ success: false, message: error.message });
     }
 }
-module.exports={sendGmailToDonor};
+const subscribeToNewsLetter=async(req,res)=>
+{
+    const receiveremail = req.body.receiverEmail;
+    // Configure transporter
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'knowntheunknown07@gmail.com',
+            pass: 'igmupbhuwigstnbm' // Use App Password or OAuth
+        }
+    });
+
+    const mailOptions = {
+        from: 'knowntheunknown07@gmail.com',
+        to: receiveremail ,
+        subject:'Welcome to BloodDonors NewsLetter Service.',
+        text: `Firstly Thanking you for subscribing to our news letter,\n We Hope You Are Well.\n From now onwards you will also walk through our journey and help us in making the world the best place to live.`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.status(200).send({ success: true, message: 'Email sent successfully!' });
+    } catch (error) {
+        res.status(500).send({ success: false, message: error.message });
+    }
+}
+module.exports={sendGmailToDonor,subscribeToNewsLetter};

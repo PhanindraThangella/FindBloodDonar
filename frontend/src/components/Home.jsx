@@ -5,8 +5,36 @@ import heroSectonImage from "../assets/heroImage.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightToBracket,faUserPlus,faArrowRightLong,faEnvelope,faPhone,faLocationDot,faUserShield,faListCheck,faComments } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram,faLinkedin,faSquareFacebook,faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { useState } from "react";
 function Home() {
   const navigate=useNavigate();
+  const [email,setEmail]=useState("");
+  const [btnText,setBtnText]=useState("Subscribe");
+  const subscribeNewsLetter=async()=>{
+    if(email===""){
+      alert("Please Mention valid Email");
+    }
+    else
+    {
+      try 
+      {
+        const res = await fetch("http://localhost:5000/api/subscribe/newsletter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body:JSON.stringify({receiverEmail:email})
+        });
+        if (res.ok) {
+          setBtnText("Subscribed");
+        }
+        else{
+          setBtnText("Failed");
+        }
+      } catch (error) 
+      {
+        alert("Failed to subscribe try again later!.");
+      }
+    }
+  }
   return (
     <div>
       {/* Navbar */}
@@ -16,7 +44,7 @@ function Home() {
             <h2 className={styles.logo} onClick={()=>{navigate("/")}}>Blood Donars</h2>
         </div>
         <div className={styles.navLinks}>
-          <a href="#">Register Yourself</a>
+          <a onClick={()=>{navigate('/Form')}}>Register Yourself</a>
           <a href="#aboutus">About Us</a>
           <Link to="/Auth/login">
             <FontAwesomeIcon icon={faArrowRightToBracket} style={{color: "#c92f3b",marginRight:4}} />
@@ -168,8 +196,8 @@ function Home() {
         </div>
         <div className={styles.subscribeNewsLetter}>
           <h2>Want to know our Stories,<br></br>Subscribe Now!.<br></br><span>Get weekly newsletter of our acheivements.</span></h2>
-          <input type="email" placeholder="Example@gmail.com"></input>
-          <button>Subscribe</button>
+          <input type="email" placeholder="Example@gmail.com" value={email} onChange={(e)=>{setEmail(e.target.value)}} required></input>
+          <button onClick={subscribeNewsLetter}>{btnText}</button>
         </div>
       </section>
 

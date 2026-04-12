@@ -1,8 +1,9 @@
 const express = require('express');
 const {getUser,storeUser, getAccess,updateProfile,getUsers,updatePassword}=require('../controllers/userControllers');
 const storeFullDetailsOfUser =require('../controllers/userFullDetailsController');
-const {sendGmailToDonor} =require('../controllers/sendGmail');
+const {sendGmailToDonor,subscribeToNewsLetter} =require('../controllers/sendGmail');
 const authenticateUser = require('../middleware/auth');
+const {sendNotification,fetchUserNotifications}=require('../controllers/userNotificationsController');
 const { storeGeoLocation } = require('../controllers/geoLocationControllers');
 const userRouter=express.Router();
 userRouter.get('/user',authenticateUser,getUser);
@@ -14,4 +15,7 @@ userRouter.post('/send-email-to-donor',authenticateUser,sendGmailToDonor);
 userRouter.get('/users',authenticateUser,getUsers);
 userRouter.post('/user/storegeoLocation',authenticateUser,storeGeoLocation);
 userRouter.post('/user/updatePassword',updatePassword);
+userRouter.post('/subscribe/newsletter',subscribeToNewsLetter);
+userRouter.post('/user/sendNotification',authenticateUser,sendNotification);
+userRouter.get('/user/getNotifications',authenticateUser,fetchUserNotifications);
 module.exports = userRouter;

@@ -27,7 +27,13 @@ const userBloodDetailsSchema=new mongoose.Schema({
     BloodReceived:{
         type:Number,
         default:0
-    }
+    },
+    Weight:String,
+    BloodPressure:String,
+    BloodSugar:String,
+    Badhabits:String,
+    Generalthings:String,
+    Contest:Boolean
 })
 
 module.exports=mongoose.model('userBloodDetailsSchema',userBloodDetailsSchema);

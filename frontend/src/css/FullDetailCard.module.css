@@ -71,7 +71,7 @@
     height:50px;
     margin-top: 20px;
 }
-.whatsappbtn
+.notification
 {
     width:150px;
     height:40px;
@@ -97,7 +97,7 @@
     border-radius: 10px;
     margin-left:40px;
 }
-.whatsappbtn,.mailbtn:hover{
+.notification,.mailbtn:hover{
     cursor:pointer;
 }
 .h4tags

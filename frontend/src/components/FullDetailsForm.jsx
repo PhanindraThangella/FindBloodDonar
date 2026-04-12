@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styles from '../css/FullDetailsForm.module.css'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck,faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 function FullDetailsForm(){
 
     const data = {
@@ -174,6 +176,10 @@ const districts = Object.keys(data);
   const [error,setError]=useState(false);
   const [grantLocation,setGrantLocation]=useState(false);
   const [denyLocation,setDenyLocation]=useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
+  const [message,setMessage]=useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -185,7 +191,13 @@ const districts = Object.keys(data);
     district: "",
     city: "",
     houseno:"",
-    landmark:""
+    landmark:"",
+    weight:"",
+    bloodpressure:"",
+    bloodsugar:"",
+    badhabits:"",
+    generalthings:"",
+    contest:false
   });
   const [cities, setCities] = useState([]);
   const token=localStorage.getItem("token");
@@ -193,6 +205,7 @@ const districts = Object.keys(data);
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
       const resultState= await sendToBackend(latitude,longitude);
+      console.log(latitude,longitude);
       setGrantLocation(resultState.success);
     });
   };
@@ -221,6 +234,7 @@ const districts = Object.keys(data);
     .then(async(result)=>{
       flag=true;
       const resultState= await sendToBackend(result.latitude,result.longitude);
+      console.log(result.latitude,result.longitude);
       setDenyLocation(resultState.success);
     }).catch((err)=>{
         console.error(err.message);
@@ -229,6 +243,7 @@ const districts = Object.keys(data);
       getCoordsFromAddress(address2)
       .then(async(result)=>{
         const resultState= await sendToBackend(result.latitude,result.longitude);
+        console.log(result.latitude,result.longitude);
         setDenyLocation(resultState.success);
       }).catch((err)=>{
         console.error(err.message);
@@ -251,27 +266,31 @@ const districts = Object.keys(data);
       longitude: parseFloat(data[0].lon),
     };
   };
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+ const handleChange = (e) => {
+  const { name, value, type, checked } = e.target;
 
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+  setFormData((prev) => {
+    const updatedData = {
+      ...prev,
+      [name]: type === "checkbox" ? checked : value
+    };
 
     if (name === "district") {
       setCities(data[value] || []);
-      setFormData((prev) => ({ ...prev, city: "" }));
+      updatedData.city = "";
     }
-  };
+
+    return updatedData;
+  });
+};
 
   const handleSubmit =async(e) => {
     const token=localStorage.getItem('token');
-    console.log(token);
     e.preventDefault();
     // console.log("Form Values:", formData);
+    var res;
     try {
-      const response = await fetch("http://localhost:5000/api/addDetailsOfUser", {
+      res = await fetch("http://localhost:5000/api/addDetailsOfUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -279,99 +298,245 @@ const districts = Object.keys(data);
         },
         body: JSON.stringify(formData)
       });
+      if(res.status==200)
+        {
+            setMessage("Success");
+            setIsVisible(true);
+            setIsSuccess(true);
+            setIsFailed(false);
+            setTimeout(()=>{
+                setMessage("Redirecting.");
+            },800);
+            setTimeout(()=>{
+                setMessage("Redirecting..");
+            },1200);
+            setTimeout(()=>{
+                setMessage("Redirecting...");
+            },1600);
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 2000);
+        }
+        else{
+            setMessage("Failed");
+            setIsVisible(true);
+            setIsFailed(true);
+            setIsSuccess(false);
+        }
+    }
+    catch(error){
+            setMessage("Failed");
+            setIsVisible(true);
+            setIsFailed(true);
+            setIsSuccess(false);
+        }
 
       // if (!response.ok) {
       //   alert("Internal Failure,Sorry For Inconvenience.");
       // }
-      if(response.status===400)
-      {
-        setError(true);
+    //   if(response.status===400)
+    //   {
+    //     setError(true);
 
-      }
-      if(response.status===401 || response.status===403)
-      {
-        navigate("/Auth");
-      }
-      if(response.ok)
-      {
-        navigate('/');
-      }
-    } catch (error) {
-      alert("Error Submiting Form Try Again.");
-    }
+    //   }
+    //   if(response.status===401 || response.status===403)
+    //   {
+    //     navigate("/Auth");
+    //   }
+    //   if(response.ok)
+    //   {
+    //     navigate('/');
+    //   }
+    // } catch (error) {
+    //   alert("Error Submiting Form Try Again.");
+    // }
+  };
+  const closeModal=()=>{
+    setIsVisible(!isVisible);
   };
 
     return(
-        <div className={styles.overlay}>
+      <>
             <div className={styles.formDiv}>
-                <form onSubmit={handleSubmit} >
-                    <h1 className={styles.formh1}>Donor Details Form</h1>
+                <form onSubmit={handleSubmit}>
+                    <h1 className={styles.formh1}>DONOR DETAILS FORM</h1>
                     <p className={styles.formp}>* Please fill this form so that we can reach out to you when needed.</p>
-                    <label className={styles.regLabel} htmlFor="Name">Name:</label>
-                    <input className={styles.regInput} name="name" value={formData.name} onChange={handleChange} type="text" id="Name" placeholder='Please Enter Your Full Name...' required></input>
-                    <label className={styles.regLabel} htmlFor="Email">Email:</label>
-                    <input className={`${styles.regInput} ${error ? styles.errorBorder : styles.normalBorder}`} name="email" value={formData.email} onChange={handleChange} type="email" id="Email" placeholder="Ex:123@gmail.com" required></input>
-                    <label className={styles.regLabel} htmlFor="PhoneNumber">Mobile No:</label>
-                    <input className={styles.regInput} name="phonenumber" value={formData.phonenumber} onChange={handleChange} type="tel" id="PhoneNumber" placeholder="please provide personal number that stays with u all time" maxLength="10" required></input>
-                    <label className={styles.regLabel} htmlFor="DOB">Date Of Birth:</label>
-                    <input className={styles.regInput} name="dob" value={formData.dob} onChange={handleChange} type="date" id="DOB" required></input>
-                    <label className={styles.regLabel} htmlFor="Age">Age:</label>
-                    <input className={styles.regInput} name="age" value={formData.age} onChange={handleChange} type="tel" maxLength='2' id="Age" placeholder='Ex:18(18 years old) ' required></input>
-                    <label className={styles.regLabel} htmlFor="Bloodgroup">Blood Group:</label>
-                    <select name="bloodgroup" value={formData.bloodgroup} onChange={handleChange}  id="Bloodgroup" required>
-                        <option value="">Select Blood Group</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                    </select>
-                    <label className={styles.regLabel} htmlFor="Gender">Gender</label>
-                    <input className={styles.radioInput} value="Male" checked={formData.gender === "Male"} onChange={handleChange} name="gender" type="radio" id="Male"></input>
-                    <label className={styles.radioLabel} htmlFor="Male" >Male</label>
-                    <input className={styles.radioInput} value="Female" checked={formData.gender === "Female"} onChange={handleChange} name="gender" type="radio" id="Female"></input>
-                    <label htmlFor="Female" className={styles.radioLabel}>Female</label>
-                    <input className={styles.radioInput} value="Others" checked={formData.gender === "Others"} onChange={handleChange} name="gender" type="radio" id="Others"></input>
-                    <label htmlFor="Others" className={styles.radioLabel}>others</label>
-                    <label className={styles.regLabel} >District:</label>
-                        <select name="district" value={formData.district} onChange={handleChange}>
-                        <option value="">-- Select District --</option>
-                        {districts.map((district, index) => (
-                            <option key={index} value={district}>
-                            {district}
-                            </option>
-                        ))}
-                        </select>
-                    <label className={styles.regLabel}>City/Mandal:</label>
-                        <select name="city" value={formData.city} onChange={handleChange} disabled={!cities.length}>
-                        <option value="">-- Select City --</option>
-                        {cities.map((city, index) => (
-                            <option key={index} value={city}>
-                            {city}
-                            </option>
-                        ))}
-                        </select>
-                    <label className={styles.regLabel} htmlFor="houseNo">House No:/ PlotNo:</label>
-                    <input className={styles.regInput} name="houseno" value={formData.houseno} onChange={handleChange} type="text" id="houseNo" required></input>
-                    <label className={styles.regLabel} htmlFor="landmark">Nearest LandMark</label>
-                    <input className={styles.regInput} name="landmark" value={formData.landmark} onChange={handleChange} type="text" id="landmark" placeholder='Near PostOffice,Near Shivalayam,etc.'required></input>
-                    <label className={styles.regLabel} htmlFor="geolocation">Location Access</label>
-                    <span><p className={styles.smallpara}>*Allow only if you are in permanent location(Home,Office,etc,.)</p></span>
-                    {grantLocation &&(<p style={{color:"green",marginLeft:10,fontSize:22,fontWeight:500}}><span class="material-symbols-outlined">task_alt</span> Access Granted</p>)
-                    }
-                    {(!grantLocation && !denyLocation) &&(<div>
-                      <span><button className={styles.buttonAllow} type="button" onClick={sendNavigatorLocation} >Allow</button></span>
-                      <span><button className={styles.buttonDeny} type="button" onClick={sendFallBackLocation} >Deny</button></span></div>)
-                    }
-                    {denyLocation &&(<p style={{color:"orange"}}>Accurate location helps in connecting people nearby!.</p>)}
-                    {error && <p style={{color:"red",margin:0,textDecoration:'none'}}>Email Already Exsists</p>}
-                    <button className={styles.buttonSubmit} type="submit">Submit</button>
+                   <fieldset className={styles.formSection}>
+                      <legend className={styles.sectionTitle}>Personal Information</legend>
+                      <div className={styles.gridRow2}>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="Name">Name:</label>
+                          <input className={styles.regInput} name="name" value={formData.name} onChange={handleChange} type="text" id="Name" placeholder='Please Enter Your Full Name...' required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="Email">Email:</label>
+                          <input className={`${styles.regInput} ${error ? styles.errorBorder : styles.normalBorder}`} name="email" value={formData.email} onChange={handleChange} type="email" id="Email" placeholder="Ex:123@gmail.com" required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="PhoneNumber">Mobile No:</label>
+                          <input className={styles.regInput} name="phonenumber" value={formData.phonenumber} onChange={handleChange} type="tel" id="PhoneNumber" placeholder="please provide personal number that stays with u all time" maxLength="10" required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="DOB">Date Of Birth:</label>
+                          <input className={styles.regInput} name="dob" value={formData.dob} onChange={handleChange} type="date" id="DOB" required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="Age">Age:</label>
+                          <input className={styles.regInput} name="age" value={formData.age} onChange={handleChange} type="tel" maxLength='2' id="Age" placeholder='Ex:18(18 years old) ' required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="Gender">Gender</label>
+                          <div className={styles.genderrb}>
+                            <input className={styles.radioInput} value="Male" checked={formData.gender === "Male"} onChange={handleChange} name="gender" type="radio" id="Male"></input>
+                            <label className={styles.radioLabel} htmlFor="Male" >Male</label>
+                            <input className={styles.radioInput} value="Female" checked={formData.gender === "Female"} onChange={handleChange} name="gender" type="radio" id="Female"></input>
+                            <label htmlFor="Female" className={styles.radioLabel}>Female</label>
+                            <input className={styles.radioInput} value="Others" checked={formData.gender === "Others"} onChange={handleChange} name="gender" type="radio" id="Others"></input>
+                            <label htmlFor="Others" className={styles.radioLabel}>others</label>
+                          </div>
+                        </div>
+                      </div>
+                   </fieldset>
+                   <fieldset className={styles.formSection}>
+                      <legend className={styles.sectionTitle}>Personal Information</legend>
+                      <div className={styles.gridRow2}>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="Bloodgroup">Blood Group:</label>
+                          <select name="bloodgroup" value={formData.bloodgroup} onChange={handleChange}  id="Bloodgroup" required>
+                              <option value="">Select Blood Group</option>
+                              <option value="A+">A+</option>
+                              <option value="A-">A-</option>
+                              <option value="B+">B+</option>
+                              <option value="B-">B-</option>
+                              <option value="AB+">AB+</option>
+                              <option value="AB-">AB-</option>
+                              <option value="O+">O+</option>
+                              <option value="O-">O-</option>
+                          </select>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="weight">Weight:</label>
+                          <input className={styles.regInput} name="weight" value={formData.weight} onChange={handleChange} type="tel" maxLength='3' id="weight" placeholder='Ex:55(in kgs,above 45 only)' required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="bloodpressure">Blood Pressure(BP):</label>
+                          <div className={styles.genderrb}>
+                            <input className={styles.radioInput} value="Yes" checked={formData.bloodpressure === "Yes"} onChange={handleChange} name="bloodpressure" type="radio" id="bp-Yes"></input>
+                            <label className={styles.radioLabel} htmlFor="bp-Yes" >Yes</label>
+                            <input className={styles.radioInput} value="No" checked={formData.bloodpressure === "No"} onChange={handleChange} name="bloodpressure" type="radio" id="bp-No"></input>
+                            <label htmlFor="bp-No" className={styles.radioLabel}>No</label>
+                          </div>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="bloodsugar">Blood Sugar:</label>
+                          <div className={styles.genderrb}>
+                            <input className={styles.radioInput} value="Yes" checked={formData.bloodsugar === "Yes"} onChange={handleChange} name="bloodsugar" type="radio" id="bs-Yes"></input>
+                            <label className={styles.radioLabel} htmlFor="bs-Yes" >Yes</label>
+                            <input className={styles.radioInput} value="No" checked={formData.bloodsugar === "No"} onChange={handleChange} name="bloodsugar" type="radio" id="bs-No"></input>
+                            <label htmlFor="bs-No" className={styles.radioLabel}>No</label>
+                          </div>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="badhabits">Smoking/Drinking:</label>
+                          <div className={styles.genderrb}>
+                            <input className={styles.radioInput} value="Yes" checked={formData.badhabits === "Yes"} onChange={handleChange} name="badhabits" type="radio" id="bh-Yes"></input>
+                            <label className={styles.radioLabel} htmlFor="bh-Yes" >Yes</label>
+                            <input className={styles.radioInput} value="No" checked={formData.badhabits === "No"} onChange={handleChange} name="badhabits" type="radio" id="bh-No"></input>
+                            <label htmlFor="bh-No" className={styles.radioLabel}>No</label>
+                          </div>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="generalthings">Does you have Tattoos, ear/body piercings, or dental work <br></br>in the last 6–12 months?</label>
+                          <div className={styles.genderrb}>
+                            <input className={styles.radioInput} value="Yes" checked={formData.generalthings === "Yes"} onChange={handleChange} name="generalthings" type="radio" id="gt-Yes"></input>
+                            <label className={styles.radioLabel} htmlFor="gt-Yes" >Yes</label>
+                            <input className={styles.radioInput} value="No" checked={formData.generalthings === "No"} onChange={handleChange} name="generalthings" type="radio" id="gt-No"></input>
+                            <label htmlFor="gt-No" className={styles.radioLabel}>No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset className={styles.formSection}>
+                      <legend className={styles.sectionTitle}>Permanent Address</legend>
+                      <div className={styles.gridRow2}> 
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} >District:</label>
+                          <select name="district" value={formData.district} onChange={handleChange}>
+                            <option value="">-- Select District --</option>
+                            {districts.map((district, index) => (
+                                <option key={index} value={district}>
+                                {district}
+                                </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel}>City/Mandal:</label>
+                          <select name="city" value={formData.city} onChange={handleChange} disabled={!cities.length}>
+                            <option value="">-- Select City --</option>
+                            {cities.map((city, index) => (
+                                <option key={index} value={city}>
+                                {city}
+                                </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="houseNo">House No:/ PlotNo:</label>
+                          <input className={styles.regInput} name="houseno" value={formData.houseno} onChange={handleChange} type="text" id="houseNo" required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="landmark">Nearest LandMark</label>
+                          <input className={styles.regInput} name="landmark" value={formData.landmark} onChange={handleChange} type="text" id="landmark" placeholder='Near PostOffice,Near Shivalayam,etc.'required></input>
+                        </div>
+                        <div className={styles.fieldGroup}>
+                          <label className={styles.regLabel} htmlFor="geolocation">Location Access</label>
+                          <span><p className={styles.smallpara}>*Allow only if you are in permanent location(Home,Office,etc,.)</p></span>
+                          {grantLocation &&(<p style={{color:"green",marginLeft:10,fontSize:22,fontWeight:500}}><span class="material-symbols-outlined">task_alt</span> Access Granted</p>)
+                          }
+                          {(!grantLocation && !denyLocation) &&(<div>
+                            <span><button className={styles.buttonAllow} type="button" onClick={sendNavigatorLocation} > <FontAwesomeIcon icon={faCircleCheck} size="xs" style={{color: "rgb(255, 255, 255)",}} /> Allow</button></span>
+                            <span><button className={styles.buttonDeny} type="button" onClick={sendFallBackLocation} > <FontAwesomeIcon icon={faCircleXmark} size="xs" style={{color: "rgb(255, 255, 255)",}} /> Deny</button></span></div>)
+                          }
+                          {denyLocation &&(<p style={{color:"orange"}}>Accurate location helps in connecting people nearby!.</p>)}
+                        </div>
+                      </div>
+                      <div className={styles.contestGrid}>
+                        <input className={styles.contestInput} name="contest" checked={formData.contest} onChange={handleChange} type="checkbox" id="contest" required></input>
+                        <label className={styles.contestLabel} htmlFor="contest">I acknowledge above mentioned data is true, as of my knowledge.</label>
+                      </div>
+                    </fieldset>
+                    <div>
+                      {error && <p style={{color:"red",margin:0,textDecoration:'none'}}>Email Already Exsists</p>}
+                      <button className={styles.buttonSubmit} type="submit" disabled={!formData.contest}>Submit</button>
+                      
+                      <button className={styles.buttonGoHome} type="button" onClick={()=>{navigate("/")}}>Go To Home</button>
+                    </div>
                 </form>
             </div>
-        </div>
+            {isVisible && 
+                <div className={styles.overlay}>
+                  <div className={styles.modal}>
+                      <span className={styles.modalCloseBtn} onClick={closeModal}>X</span>
+                      <div className={styles.modalMain}>
+                          {isSuccess && (
+                              <>
+                              <FontAwesomeIcon icon={faCircleCheck} className={styles.modalSuccess} />
+                              <p className={styles.modalMessage}>{message}</p>
+                              </>
+                          )}
+                          {isFailed && (
+                              <>
+                              <span className={`material-symbols-outlined ${styles.modalInvalid}`}>error </span>
+                              <p className={styles.modalMessage}> Failed</p>
+                              </>
+                          )}
+
+                      </div>
+                  </div>
+              </div>
+            }
+    </>
     )
 }
 

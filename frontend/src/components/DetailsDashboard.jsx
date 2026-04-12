@@ -1,6 +1,6 @@
 import logo from "../assets/BG.jpg";
 import axios from 'axios';
-import {useState,useMemo} from 'react';
+import {useState,useMemo,useEffect} from 'react';
 import { motion } from 'framer-motion';
 import styles from "../css/DetailsDashboard.module.css";
 import FullDetailCard from './FullDetailCard';
@@ -11,11 +11,23 @@ import { useAuth } from "../context/AuthContext";
 function DetailsDashboard(){
     const [selectedOption,setSelectedOption]=useState("");
     const [selectedUserIndex,setSelectedUserIndex]=useState(null);
+    const [usersNotFound,setUsersNotFound]=useState(false);
     const [sort,setSort]=useState("");
     const [users,setUsers]=useState([]);
-    const [error,setError] = useState('');
     const {setUser}=useAuth();
     const navigate=useNavigate();
+    useEffect(() => {
+        const savedOption = localStorage.getItem("selectedOption");
+        const savedData = localStorage.getItem("data");
+
+        if (savedOption) {
+        setSelectedOption(savedOption);
+        }
+
+        if (savedData) {
+        setUsers(JSON.parse(savedData));
+        }
+    }, []);
     const fetchUsersData=()=>{
         axios.get("http://localhost:5000/api/users", {
             params:{
@@ -27,11 +39,12 @@ function DetailsDashboard(){
         })
         .then((response) => {
             setUsers(response.data);
+            localStorage.setItem("selectedOption", selectedOption);
+            localStorage.setItem("data", JSON.stringify(response.data));
         })
         .catch((err) => {
-            setError("Failed to fetch data!");
+            setUsersNotFound(true);
         });
-        console.log(users);
     }
     const sortedUsers = useMemo(() => {
         if(!users || users === 0) return [];
@@ -50,6 +63,11 @@ function DetailsDashboard(){
         localStorage.clear();
         navigate("/");
     }
+    const UserString=localStorage.getItem("user");
+    const user=JSON.parse(UserString);
+    const formattedName = user?.name.split(' ').join('+');
+    const size=50;
+    const avatarUrl = `https://ui-avatars.com/api/?name=${formattedName}&background=random&color=fff&size=${size}&bold=true`;
 
     return(
         <div className={styles.wrapper}>
@@ -85,7 +103,7 @@ function DetailsDashboard(){
                         <span><FontAwesomeIcon icon={faArrowRightFromBracket} className={styles.logoutIcon} /></span>
                     </button>
                     <div className={styles.profileMenu}>
-                        <div className={styles.profileImage}></div>
+                        <div className={styles.profileImage}><img src={avatarUrl} alt="profile image" /></div>
                         <a onClick={()=>{navigate("/Profile")}}>Profile</a>
                     </div>
                 </div>
@@ -169,7 +187,7 @@ function DetailsDashboard(){
                             </div>
                         </div>
                     )}
-                    {sortedUsers.length==0 && selectedOption &&(
+                    {sortedUsers.length==0 && selectedOption.length>0 && usersNotFound &&(
                         <div style={{width:"90vh",margin:"auto",backgroundColor:"white",height:180,borderRadius:10,textAlign:"center"}}>
                             <h1 style={{marginTop:30}}> No Users Found,Sorry for the inconvenience.</h1>
                         </div>

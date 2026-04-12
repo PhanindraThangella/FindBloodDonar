@@ -83,3 +83,72 @@
 .closebtn:hover {
     color: #000;
 }
+/* modal styling starts from here   */
+.modaloverlay{
+    position: fixed !important;
+    z-index: 99999 !important;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background: rgba(160, 159, 159, 0.5);
+}
+.modal{
+    display: block;
+    position:relative;
+    top:40%;
+    left:37%;
+    width:300px;
+    height: 120px;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 1000;
+}
+.modalCloseBtn{
+    width:20px;
+    height: 20px;
+    border-radius: 50%;
+    border:1px solid black;
+    float:right;
+    margin-right:10px;
+    margin-top:10px;
+    text-align:center;
+    color:white;
+    background-color: black;
+    font-weight: 700px;
+}
+.modalCloseBtn:hover{
+    cursor: pointer;
+    background-color: white;
+    color:black;
+}
+.modalSuccess{
+    color: rgb(7, 234, 15);
+    width:50px;
+    height:50px;
+    margin-top:40px;
+    margin-left:30px;
+}
+.modalMessage{
+    margin-top:50px;
+    margin-left:20px;
+    font-size: 26px;
+}
+.modalMain{
+    display: flex;
+    flex-direction: row;
+}
+.modalInvalid{
+    color: #EA3323;
+    font-size: 64px; 
+    font-variation-settings: 'opsz' 48;
+    margin-top:30px;
+    margin-left:30px;
+}
+.modalSending{
+    color:black;
+    width:50px;
+    height:50px;
+    margin-top:40px;
+    margin-left:30px;
+}

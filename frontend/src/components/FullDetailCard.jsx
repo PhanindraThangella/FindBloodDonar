@@ -1,11 +1,10 @@
 import styles from '../css/FullDetailCard.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import {useEffect} from'react';
 function FullDetailCard({user, onClose}){
-    console.log(user);
     useEffect(() => {
     // Disable scroll
     document.body.style.overflow = 'hidden';
@@ -40,8 +39,8 @@ return(
                         </div>
                     </div>
                     <div className={styles.popupbtn}>
-                        <button className={styles.whatsappbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'whatsapp'}})}><FontAwesomeIcon icon={faWhatsapp} style={{color: "rgb(255, 255, 255)",marginRight:4}} />Whatsapp</button>
-                        <button className={styles.mailbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'mail',email:user.Email}})}><FontAwesomeIcon icon={faEnvelope} style={{color: "rgb(255, 255, 255)",marginRight:4}} />Mail</button>
+                        <button className={styles.notification} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'notification',email:user.Email,receiverUserId:user.UserId}})}><FontAwesomeIcon icon={faBell} style={{color: "rgb(255, 255, 255)",marginRight:8}} />Notify</button>
+                        <button className={styles.mailbtn} onClick={()=>navigate("/ContactInfoForm",{state: {sendState:'mail',email:user.Email}})}><FontAwesomeIcon icon={faEnvelope} style={{color: "rgb(255, 255, 255)",marginRight:8}} />Mail</button>
                     </div>
             </div>
         </div>
