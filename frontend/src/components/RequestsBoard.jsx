@@ -43,10 +43,23 @@ function RequestsBoard(){
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: index * 0.1 }}
                         >
-                            <p><strong>Name:</strong> {request.Name}</p>
-                            <p><strong>Hospital Name:</strong> {request.HospitalName}</p>
-                            <p><strong>Contact Number:</strong> {request.ContactNumber}</p>
-                            <p><strong>Address:</strong> {request.Address}</p>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th><p><strong>Name:</strong></p></th>
+                                        <th><p><strong>Hospital Name:</strong> </p></th>
+                                        <th><p><strong>Contact Number:</strong> </p></th> 
+                                        <th><p><strong>Address:</strong> </p></th>    
+                                        <th rowSpan={2} colSpan={2}><button className={styles.acceptbutton} type='button'>Accept</button><button className={styles.rejectbutton} type='button'>Reject</button></th>                           
+                                    </tr>
+                                    <tr>
+                                        <td><p>{request.Name}</p></td>
+                                        <td><p>{request.HospitalName}</p></td>
+                                        <td><p>{request.ContactNumber}</p></td>
+                                        <td><p>{request.Address}</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </motion.div>
                     ))}    
                 </div>
