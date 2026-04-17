@@ -11,7 +11,6 @@ import {useState} from 'react';
 function ProfilePage(){
     const navigate=useNavigate();
     const {user,setUser}=useAuth();
-    console.log(user);
     const [IsDashboard,setDashboard]=useState(true);
     const [IsContributions,setContributions]=useState(false);
     const [IsRequests,setRequests]=useState(false);
@@ -57,21 +56,21 @@ function ProfilePage(){
             <div className={styles.sidenavbar}>
                 {/* <p className={styles.username}>{user.name}</p> */}
                 <ul className={styles.listContainer}>
-                    <li><ArrowLeft size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={()=>{navigate("/dashboard")}} >Back To Home</a></li>
-                    <li><LayoutDashboard size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={handleDashboard} >DashBoard</a></li>
-                    <li><HandHelping size={16} color="#ffffff" strokeWidth={2.5} /> <a onClick={handleContributions}>Contributions</a></li>
-                    <li><MessageSquareMore size={16} color="#ffffff" strokeWidth={2.5} /> <a onClick={handleRequests}>Recent Requests</a></li>
-                    <li><Settings size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={handleSettings}> Settings</a></li>
+                    <li onClick={()=>{navigate("/dashboard")}}><ArrowLeft size={16} color="#ffffff" strokeWidth={2.5} /><a>Back To Home</a></li>
+                    <li onClick={handleDashboard}><LayoutDashboard size={16} color="#ffffff" strokeWidth={2.5} /> <a>DashBoard</a></li>
+                    <li onClick={handleContributions}><HandHelping size={16} color="#ffffff" strokeWidth={2.5} /><a>Contributions</a></li>
+                    <li onClick={handleRequests}><MessageSquareMore size={16} color="#ffffff" strokeWidth={2.5} /> <a>Recent Requests</a></li>
+                    <li onClick={handleSettings}><Settings size={16} color="#ffffff" strokeWidth={2.5} /><a> Settings</a></li>
                 </ul>
                 <ul className={styles.logoutbutton}>
-                <li className={styles.logoutli} ><Power size={16} color="#ffffff" strokeWidth={2.5} /><a onClick={handleLogout}>Logout</a></li>
+                    <li className={styles.logoutli} onClick={handleLogout}><Power size={16} color="#ffffff" strokeWidth={2.5} /><a>Logout</a></li>
                 </ul>
             </div>
             <div className={styles.mainContent}>
-            {IsDashboard && <ProfileDashboard/>}
-            {IsContributions && <ContributionsBoard/>}
-            {IsRequests && <RequestsBoard/>}
-            {IsSettings && <SettingsBoard/>}
+                {IsDashboard && <ProfileDashboard/>}
+                {IsContributions && <ContributionsBoard/>}
+                {IsRequests && <RequestsBoard/>}
+                {IsSettings && <SettingsBoard/>}
             </div>
         </div>
     )

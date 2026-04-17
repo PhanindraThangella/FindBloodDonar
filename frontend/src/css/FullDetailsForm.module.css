@@ -237,3 +237,151 @@
     margin-top:30px;
     margin-left:30px;
 }
+/* ================================================= */
+/* ========= DONOR FORM RESPONSIVE FIX ============== */
+/* ================================================= */
+
+/* ================= TABLET ================= */
+@media (max-width: 1024px) {
+
+  .regInput,
+  .formDiv select {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .buttonSubmit,
+  .buttonGoHome {
+    width: 100%;
+    max-width: 350px;
+    margin-left: 0;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* MAIN */
+  .formDiv {
+    padding: 15px;
+  }
+
+  /* GRID → SINGLE COLUMN */
+  .gridRow2 {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* INPUTS FULL WIDTH */
+  .regInput,
+  .formDiv select {
+    width: 100%;
+    max-width: 100%;
+  }
+  .formh1{
+    font-size: larger;
+  }
+
+  /* LABEL */
+  .regLabel {
+    font-size: 14px;
+  }
+
+  /* SECTION */
+  .formSection {
+    padding: 15px;
+  }
+
+  .sectionTitle {
+    font-size: 18px;
+  }
+
+  /* RADIO GROUP */
+  .genderrb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* CONTEST CHECK */
+  .contestGrid {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contestLabel {
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  /* BUTTONS (IMPORTANT FIX) */
+  .buttonSubmit,
+  .buttonGoHome {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    display: block;
+    font-size: 16px;
+    height: 45px;
+  }
+
+  /* LOCATION BUTTONS */
+  .buttonAllow,
+  .buttonDeny {
+    margin-left: 0;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  /* SMALL TEXT */
+  .smallpara {
+    font-size: 12px;
+  }
+
+  /* ERROR TEXT */
+  .formp {
+    font-size: 13px;
+  }
+
+  /* MODAL FIX */
+  .modal {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    padding: 10px;
+  }
+
+  .modalMain {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modalMessage {
+    margin: 10px 0 0;
+    font-size: 18px;
+  }
+
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .sectionTitle {
+    font-size: 16px;
+  }
+
+  .regInput {
+    font-size: 13px;
+  }
+
+  .buttonSubmit,
+  .buttonGoHome {
+    font-size: 14px;
+  }
+
+}

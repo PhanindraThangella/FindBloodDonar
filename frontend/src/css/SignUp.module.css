@@ -54,3 +54,24 @@
     color:#c92f3b;
     border:1px solid #c92f3b;
 }
+/* ================================================= */
+/* ============ LOGIN MODAL RESPONSIVE ============== */
+/* ================================================= */
+
+@media (max-width: 768px) {
+
+  .signupdiv h2 {
+    font-size: 20px;
+  }
+
+  .signupdiv input {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .signupdiv button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+}

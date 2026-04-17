@@ -10,7 +10,7 @@ const getUser=async(req,res)=>{
     res.json(results);
 };
 const getUsers=async(req,res)=>{
-  const group=req.query.group;
+  const groups = req.query?.group.split(",");
    const userId = req.user.userId;
     // ✅ Step 1: Get current user's location
     const currentUser = await userCoordinatesDetailsSchema.findOne({ userId });
@@ -33,7 +33,7 @@ const getUsers=async(req,res)=>{
    const nearbyUserIds = nearbyUsers.map(u => u.userId);
   const result = await userBloodDetailsSchema.find(
     {
-      BloodGroup: group,
+      BloodGroup:{ $in: groups },
       UserId: { $in: nearbyUserIds }
     },
     {

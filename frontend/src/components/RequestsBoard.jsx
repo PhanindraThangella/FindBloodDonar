@@ -3,18 +3,18 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 function RequestsBoard(){
+    const API_URL=import.meta.env.VITE_API_URL;
     const [requests,setRequests]=useState([]);
     useEffect(()=>{
         fetchNotifications()
     },[]);
     const fetchNotifications=async()=>{
-        axios.get("http://localhost:5000/api/user/getNotifications", {
+        axios.get(`${API_URL}/api/user/getNotifications`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             }
         })
         .then((response) => {
-            console.log(response.data);
             setRequests(response.data);
         })
         .catch((err) => {

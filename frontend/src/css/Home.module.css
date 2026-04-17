@@ -1,23 +1,23 @@
-/* Global reset (still works in modules) */
+/* ================= GLOBAL RESET ================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* You can keep font global via index.css ideally */
+/* ================= GLOBAL FONT ================= */
 :global(body) {
   font-family: "Poppins", sans-serif;
 }
 
-/* Colors */
+/* ================= COLOR VARIABLES ================= */
 :root {
   --primary: #e63946;
   --dark: #1d3557;
   --light: #f8f9fa;
 }
 
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -32,10 +32,11 @@
   font-weight: 700;
   padding-top: 8px;
 }
-.logo:hover{
-  cursor:pointer;
+
+.logo:hover {
+  cursor: pointer;
 }
-/* ✅ FIXED: camelCase */
+
 .navLinks a {
   margin: 0 15px;
   text-decoration: none;
@@ -43,6 +44,9 @@
   font-weight: 500;
   transition: 0.3s;
 }
+.navLinks a:nth-child(1)::after{
+    content: " Yourself";
+  }
 
 .navLinks a:hover {
   color: var(--primary);
@@ -62,65 +66,16 @@
   background: #c92f3b;
 }
 
-/* Hero */
-/* .hero {
-  text-align: center;
-  padding: 90px 20px;
-  background: var(--light);
-}
-.hero h1 {
-  font-size: 44px;
-  color: var(--dark);
-}
-
-.hero p {
-  margin: 15px 0;
-  color: gray;
-  font-size: 18px;
-}
-.searchBox {
-  margin-top: 25px;
-}
-
-.searchBox input {
-  padding: 12px;
-  width: 260px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-}
-
-.searchBox button {
-  padding: 12px 20px;
-  margin-left: 10px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.searchBox button:hover {
-  background: #c92f3b;
-} */
-/* .hero {
+/* ================= HERO SECTION ================= */
+.ddhero {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 80px 8%;
+  padding: 80px 8% 0px;
   gap: 40px;
   background: var(--light);
-} */
-.ddhero{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 80px 8% 0px;
-    gap: 40px;
-    background: var(--light);
 }
-/* LEFT TEXT */
+
 .heroContent {
   max-width: 550px;
 }
@@ -144,7 +99,6 @@
   font-size: 18px;
 }
 
-/* BUTTON */
 .ctaBtn {
   margin-top: 25px;
   padding: 14px 28px;
@@ -155,18 +109,19 @@
   cursor: pointer;
   font-size: 16px;
 }
-.ctaBtn:hover{
-  background-color:white;
-  color:#c92f3b;
-  border:1px solid#c92f3b;
+
+.ctaBtn:hover {
+  background-color: white;
+  color: #c92f3b;
+  border: 1px solid #c92f3b;
 }
 
-/* RIGHT IMAGE */
 .heroImage img {
   width: 500px;
   max-width: 100%;
 }
-/* Features */
+
+/* ================= FEATURES ================= */
 .features {
   padding: 70px 8%;
   text-align: center;
@@ -177,74 +132,69 @@
   justify-content: center;
   gap: 25px;
   margin-top: 40px;
-  flex-wrap: wrap; /* ✅ responsive */
+  flex-wrap: wrap;
 }
+
 .card { 
-    width:260px;
-    height:380px; 
-    border-radius: 14px; 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
-    transition: 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-.card1 {
-  background: url("../assets/card1.png") center/cover no-repeat;
+  width: 260px;
+  height: 380px; 
+  border-radius: 14px; 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.card2 {
-  background: url("../assets/card2.png") center/cover no-repeat;
-}
-
-.card3 {
-  background: url("../assets/card3.png") center/cover no-repeat;
-}
-
-.card4 {
-  background: url("../assets/card4.png") center/cover no-repeat;
-}
+.card1 { background: url("../assets/card1.png") center/cover no-repeat; }
+.card2 { background: url("../assets/card2.png") center/cover no-repeat; }
+.card3 { background: url("../assets/card3.png") center/cover no-repeat; }
+.card4 { background: url("../assets/card4.png") center/cover no-repeat; }
 
 .card:hover {
   transform: translateY(-8px);
 }
 
-/* CTA */
+/* ================= CTA SECTION ================= */
 .cta {
   background: var(--primary);
   color: white;
-  /* text-align: center; */
   display: flex;
   flex-direction: row;
 }
-.ctaRegisterDonor{
-  padding:40px 50px 70px;
-  max-width:500px;
-  border-right:2px solid white;
-  border-right-style: dotted;
-}
-.subscribeNewsLetter{
-  padding:40px 50px 70px;
 
+.ctaRegisterDonor {
+  padding: 40px 50px 70px;
+  max-width: 500px;
+  border-right: 2px dotted white;
 }
-.subscribeNewsLetter input{
-  width:400px;
-  height:40px;
+
+.subscribeNewsLetter {
+  padding: 40px 50px 70px;
+}
+
+.subscribeNewsLetter input {
+  width: 400px;
+  height: 40px;
   border-radius: 30px;
   border: none;
-  padding-left:20px;
+  padding-left: 20px;
 }
-.subscribeNewsLetter button{
-  margin-left:30px;
+
+.subscribeNewsLetter button {
+  margin-left: 30px;
 }
-.subscribeNewsLetter span{
+
+.subscribeNewsLetter span {
   font-size: small;
   font-weight: 200;
 }
-.subscribeNewsLetter input::placeholder{
-  padding-left:20px;
+
+.subscribeNewsLetter input::placeholder {
+  padding-left: 20px;
 }
-.subscribeNewsLetter input:focus{
+
+.subscribeNewsLetter input:focus {
   outline: none;
 }
 
@@ -262,9 +212,10 @@
 
 .cta button:hover {
   background: #c92f3b;
-  color:white;
+  color: white;
 }
-/* Hero Stats */
+
+/* ================= HERO STATS ================= */
 .heroStats {
   display: flex;
   justify-content: center;
@@ -283,7 +234,7 @@
   color: gray;
 }
 
-/* How It Works */
+/* ================= HOW IT WORKS ================= */
 .howItWorks {
   padding: 70px 8%;
   text-align: center;
@@ -302,7 +253,7 @@
   max-width: 250px;
 }
 
-/* Testimonials */
+/* ================= TESTIMONIALS ================= */
 .testimonials {
   padding: 70px 8%;
   text-align: center;
@@ -328,18 +279,23 @@
   margin-top: 10px;
   color: var(--primary);
 }
-.logoImg{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 20px;
+
+/* ================= LOGO ================= */
+.logoImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
 }
-.logoDiv{
-    display: flex;
-    flex-direction: row;
+
+.logoDiv {
+  display: flex;
+  flex-direction: row;
 }
+
+/* ================= FOOTER ================= */
 .footer {
-  background:black;
+  background: black;
   color: white;
   padding: 50px 8% 20px;
 }
@@ -361,12 +317,12 @@
 
 .footerSection span {
   display: block;
-  text-decoration: none;
   color: #ccc;
   margin: 6px 0;
   transition: 0.3s;
 }
-.footerSection p{
+
+.footerSection p {
   margin: 6px 0;
 }
 
@@ -380,4 +336,104 @@
   border-top: 1px solid #444;
   padding-top: 15px;
   font-size: 14px;
+}
+
+/* ================================================= */
+/* ============ RESPONSIVE ADD-ON ONLY ============== */
+/* ================================================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .heroImage img {
+    width: 400px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding:0px;
+  }
+
+  .navLinks {
+    display: flex;
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+  }
+  .navLinks a{
+    padding:0px;
+    margin:0px 10px;
+  }
+  .navLinks a:nth-child(1){
+    margin-right:50px;
+  }
+  .navLinks a:nth-child(1)::after{
+    content: " Donor";
+  }
+  .navLinks a:nth-child(2){
+    display: none;
+  }
+
+  .ddhero {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 5%;
+  }
+
+  .heroStats {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    margin-top:10px;
+  }
+
+  .card{
+    width:200px;
+    height:300px;
+  }
+  .cta {
+    flex-direction: column;
+  }
+
+  .ctaRegisterDonor {
+    border-right: none;
+    border-bottom: 2px dotted white;
+    text-align: center;
+  }
+
+  .subscribeNewsLetter {
+    text-align: center;
+  }
+
+  .subscribeNewsLetter input {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+  }
+
+  .subscribeNewsLetter button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .footerContainer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+
+  .heroTitle {
+    font-size: 24px;
+  }
+
+  .heroDesc {
+    font-size: 14px;
+  }
+
 }

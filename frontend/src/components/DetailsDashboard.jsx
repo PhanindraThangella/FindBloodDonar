@@ -9,6 +9,7 @@ import {faArrowRightFromBracket,faMagnifyingGlass} from '@fortawesome/free-solid
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 function DetailsDashboard(){
+    const API_URL=import.meta.env.VITE_API_URL;
     const [selectedOption,setSelectedOption]=useState("");
     const [selectedUserIndex,setSelectedUserIndex]=useState(null);
     const [usersNotFound,setUsersNotFound]=useState(false);
@@ -16,6 +17,44 @@ function DetailsDashboard(){
     const [users,setUsers]=useState([]);
     const {setUser}=useAuth();
     const navigate=useNavigate();
+    const bloodCompatibility = {
+    "A+": ["A+", "A-", "O+", "O-"],
+    "A-": ["A-", "O-"],
+    "B+": ["B+", "B-", "O+", "O-"],
+    "B-": ["B-", "O-"],
+    "AB+": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    "AB-": ["AB-", "A-", "B-", "O-"],
+    "O+": ["O+", "O-"],
+    "O-": ["O-"]
+    };
+    const getSubstituteGroupDetails=()=>{
+        if(selectedOption === "search"|| selectedOption === ""){
+            alert("Please select the blood group in dropdown!.");
+        }
+        else{
+            const compatibleDonors = bloodCompatibility[selectedOption];
+            axios.get(`${API_URL}/api/users`, {
+                params: {
+                    group: compatibleDonors.join(",")
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                }
+            })
+            .then((response) => {
+                setUsers(response.data);
+                if(response.data.length==0){
+                    setUsersNotFound(true);
+                }
+                localStorage.setItem("selectedOption", selectedOption);
+                localStorage.setItem("data", JSON.stringify(response.data));
+            })
+            .catch((err) => {
+                setUsersNotFound(true);
+            });
+        }
+        
+    }
     useEffect(() => {
         const savedOption = localStorage.getItem("selectedOption");
         const savedData = localStorage.getItem("data");
@@ -29,7 +68,7 @@ function DetailsDashboard(){
         }
     }, []);
     const fetchUsersData=()=>{
-        axios.get("http://localhost:5000/api/users", {
+        axios.get(`${API_URL}/api/users`, {
             params:{
                 group:selectedOption
             },
@@ -39,6 +78,9 @@ function DetailsDashboard(){
         })
         .then((response) => {
             setUsers(response.data);
+            if(response.data.length==0){
+                setUsersNotFound(true);
+            }
             localStorage.setItem("selectedOption", selectedOption);
             localStorage.setItem("data", JSON.stringify(response.data));
         })
@@ -49,12 +91,21 @@ function DetailsDashboard(){
     const sortedUsers = useMemo(() => {
         if(!users || users === 0) return [];
         if (sort === 'SortByAge') {
-          return [...users].sort((a, b) => a.Age - b.Age);
+            const sortdata=[...users].sort((a, b) => a.Age - b.Age)
+            if(sortdata.length==0)
+                setUsersNotFound(true);
+          return sortdata;
         } else if (sort === 'OnlyMale') {
-          return [...users].filter(user=>user.Gender==="Male");
+          const sortdata=[...users].filter(user=>user.Gender==="Male");
+          if(sortdata.length==0)
+                setUsersNotFound(true);
+          return sortdata;
         }
          else if (sort === 'OnlyFemale') {
-          return [...users].filter(user=>user.Gender==="Female");
+          const sortdata=[...users].filter(user=>user.Gender==="Female");
+          if(sortdata.length==0)
+                setUsersNotFound(true);
+          return sortdata;
         }
         return users;
       }, [sort,users]);
@@ -74,28 +125,28 @@ function DetailsDashboard(){
       
             {/* NAVBAR */}
             <div className={styles.navbar}>
-                <div className={styles.leftNav}>
-                <div className={styles.logo}>
-                    <img className={styles.logoImg} src={logo} alt="logo"></img>
-                </div>
-                <div className={styles.brand}>Blood Donars</div>
+                <div className={styles.leftNav} onClick={()=>{navigate("/dashboard")}}>
+                    <div className={styles.logo}>
+                        <img className={styles.logoImg} src={logo} alt="logo"></img>
+                    </div>
+                    <div className={styles.brand}>Blood Donars</div>
                 </div>
 
                 <div className={styles.searchBar}>
-                <select defaultValue="search" onChange={(e)=>{setSelectedOption(e.target.value)}} value={selectedOption}>
-                    <option value="search">Search..</option>
-                    <option value="A+">A+(Positive)</option>
-                    <option value="A-">A-(Negative)</option>
-                    <option value="B+">B+(Positive)</option>
-                    <option value="B-">B-(Negative)</option>
-                    <option value="AB+">AB+(Positive)</option>
-                    <option value="AB-">AB-(Negative)</option>
-                    <option value="O+">O+(Positive)</option>
-                    <option value="O-">O-(Negative)</option>
-                </select>
-                <button className={styles.searchBtn} onClick={fetchUsersData}>Search
-                    <FontAwesomeIcon icon={faMagnifyingGlass} size='lg' style={{color: "rgb(255, 255, 255)",marginLeft:5}} />
-                </button>
+                    <select defaultValue="search" onChange={(e)=>{setSelectedOption(e.target.value)}} value={selectedOption}>
+                        <option value="search">Search..</option>
+                        <option value="A+">A+(Positive)</option>
+                        <option value="A-">A-(Negative)</option>
+                        <option value="B+">B+(Positive)</option>
+                        <option value="B-">B-(Negative)</option>
+                        <option value="AB+">AB+(Positive)</option>
+                        <option value="AB-">AB-(Negative)</option>
+                        <option value="O+">O+(Positive)</option>
+                        <option value="O-">O-(Negative)</option>
+                    </select>
+                    <button className={styles.searchBtn} onClick={fetchUsersData}>Search
+                        <FontAwesomeIcon icon={faMagnifyingGlass} size='lg' style={{color: "rgb(255, 255, 255)",marginLeft:5}} />
+                    </button>
                 </div>
 
                 <div className={styles.rightNav}>
@@ -114,14 +165,25 @@ function DetailsDashboard(){
 
                 {/* SIDEBAR */}
                 <div className={styles.sidebar}>
-                <div className={styles.menu}>
-                    <a href="#">Only Specified</a>
-                    <a href="#">Substitute BloodGroup</a>
-                    <a href="#">Contact All</a>
-                    <a href="#" onClick={()=>{setSort("SortByAge");console.log(sortedUsers)}}>Sort By Age</a>
-                    <a href="#" onClick={()=>{setSort("OnlyMale");console.log(sortedUsers.length)}}>Only Male</a>
-                    <a href="#" onClick={()=>{setSort("OnlyFemale");console.log(sortedUsers)}}>Only Female</a>
+                    <div className={styles.menu}>
+                        <a href="#" onClick={()=>{navigate("/Profile")}}>Your Requests</a>
+                        <a href="#" onClick={getSubstituteGroupDetails}>Substitute BloodGroup</a>
+                        <a href="#" onClick={()=>{alert("Coming Soon!.")}}>Contact All</a>
+                        <a href="#" onClick={()=>{setSort("SortByAge")}}>Sort By Age</a>
+                        <a href="#" onClick={()=>{setSort("OnlyMale")}}>Only Male</a>
+                        <a href="#" onClick={()=>{setSort("OnlyFemale")}}>Only Female</a>
+                    </div>
                 </div>
+                {/* Sort By for Mobile View */}
+                <div className={styles.sortdiv}>
+                        <div className={styles.sortsubdiv}>
+                            <select defaultValue="sortby" onChange={(e)=>{setSort(e.target.value)}} value={sort}>
+                                <option value="sortby">Sort By</option>
+                                <option value="SortByAge">Age</option>
+                                <option value="OnlyMale">Only Male</option>
+                                <option value="OnlyFemale">Only Female</option>
+                            </select>
+                        </div>
                 </div>
 
                 {/* MAIN CONTENT */}
@@ -163,19 +225,44 @@ function DetailsDashboard(){
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.4, delay: index * 0.1 }}
                                 >
-                                    <h3>{user.Name}</h3>
-                                    <p><strong>Age:</strong> {user.Age}</p>
-                                    <p><strong>Blood Group:</strong> {user.BloodGroup}</p>
-                                    <p><strong>City:</strong> {user.City}</p>
-                                    <p><strong>Gender:</strong> {user.Gender}</p>
-
-                                    <button
-                                    className={styles.usersdetailsbtn}
-                                    onClick={() => {setSelectedUserIndex(index);console.log(index);}}
-                                    >
-                                    View Details
-                                    </button>
-
+                                    <table className={styles.userdetailstable}>
+                                        <thead>
+                                            <tr>
+                                                <th colSpan={2}><h3>{user.Name}</h3></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                            <tr>
+                                                <td><p><strong>Age:</strong></p></td>
+                                                <td><p> {user.Age}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Blood Group:</strong></p></td>
+                                                <td><p> {user.BloodGroup}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>City:</strong></p></td>
+                                                <td><p> {user.City}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Gender:</strong></p></td>
+                                                <td><p> {user.Gender}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td colSpan={2} rowSpan={3}>
+                                                    <div className={styles.userdetailsbtndiv}>
+                                                        <button
+                                                            className={styles.usersdetailsbtn}
+                                                            onClick={() => {setSelectedUserIndex(index)}}
+                                                            >
+                                                            View Details
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     {selectedUserIndex === index && (
                                     <FullDetailCard
                                         user={user}
@@ -188,8 +275,8 @@ function DetailsDashboard(){
                         </div>
                     )}
                     {sortedUsers.length==0 && selectedOption.length>0 && usersNotFound &&(
-                        <div style={{width:"90vh",margin:"auto",backgroundColor:"white",height:180,borderRadius:10,textAlign:"center"}}>
-                            <h1 style={{marginTop:30}}> No Users Found,Sorry for the inconvenience.</h1>
+                        <div className={styles.nouserdiv}>
+                            <h1> No Users Found,Sorry for the inconvenience.</h1>
                         </div>
                     )}
                 </div>

@@ -29,13 +29,39 @@ return(
                             <img src={avatarUrl} alt={`${user.Name}'s profile`}/>
                         </div>
                         <div className={styles.userdetails}>
-                            <h3>{user.Name}</h3>
-                            <p><strong>Age:</strong> {user.Age}</p>
-                            <p><strong>Gender:</strong> {user.Gender}</p>
-                            <p><strong>Blood Group:</strong> {user.BloodGroup}</p>
-                            <p><strong>Date Of Birth:</strong> {user.DateOfBirth}</p>
-                            <p><strong>City:</strong> {user.City}</p>
-                            <p><strong>Landmark:</strong> {user.Landmark}</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colSpan={2}><h3>{user.Name}</h3></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><p><strong>Age:</strong></p></td>
+                                        <td><p>{user.Age}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p><strong>Gender:</strong></p></td>
+                                        <td><p>{user.Gender}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p><strong>Blood Group:</strong></p></td>
+                                        <td><p>{user.BloodGroup}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p><strong>Date Of Birth:</strong></p></td>
+                                        <td><p>{user.DateOfBirth}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p><strong>City:</strong></p></td>
+                                        <td><p>{user.City}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p><strong>Landmark:</strong></p></td>
+                                        <td><p>{user.Landmark}</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div className={styles.popupbtn}>

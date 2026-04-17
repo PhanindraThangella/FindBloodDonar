@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCircleCheck} from '@fortawesome/free-regular-svg-icons';
 
 function ResetPassword(){
+    const API_URL=import.meta.env.VITE_API_URL;
     const [touched,setTouched]=useState(false);
     const [formData,setFormData]=useState({email:"",newPassword:"",conformPassword:""});
     const navigate=useNavigate();
@@ -20,7 +21,7 @@ function ResetPassword(){
         event.preventDefault();
         var res;
         try{
-            res=await fetch("http://localhost:5000/api/user/updatePassword", {
+            res=await fetch(`${API_URL}/api/user/updatePassword`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body:JSON.stringify(formData)

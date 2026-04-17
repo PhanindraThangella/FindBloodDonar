@@ -1,9 +1,8 @@
-
 .lognavbar
 {
     height:60px;
     position:fixed;
-    margin-top:60px;
+    margin-top:40px;
     margin-left:0px;
     display:block;
 }
@@ -12,7 +11,7 @@
     height:40px;
     border-radius: 0 20px 0px 20px;
     border:0;
-    margin-left:320px;
+    margin-left:470px;
     background-color: #c92f3b;
     Color:white;
     font-size:22px;
@@ -40,4 +39,60 @@
     top:0;
     left:0;
     padding:2px;
+}
+.backtoHome{
+    margin:20px;
+
+}
+/* ================================================= */
+/* ============ LOGIN NAVBAR RESPONSIVE ============= */
+/* ================================================= */
+
+@media (max-width: 768px) {
+
+  .lognavbar {
+    position: static;
+    margin: 20px 20px 0px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    height: auto;
+  }
+
+  .loginbtn {
+    margin-left:0px;
+    width: 90%;
+    max-width: 150px;
+    font-size: 18px;
+  }
+
+  .signUpbtn {
+    margin-right: 0;
+    float: none;
+    width: 90%;
+    max-width: 150px;
+    font-size: 18px;
+  }
+
+  .backthbtn {
+    margin-left: 5px;
+    font-size: 14px;
+  }
+  .backtoHome{
+    margin-left:0px;
+  }
+  
+
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+
+  .loginbtn,
+  .signUpbtn {
+    width: 100%;
+    font-size: 16px;
+  }
+
 }

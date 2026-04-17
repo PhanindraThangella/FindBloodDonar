@@ -7,6 +7,7 @@ import { faArrowRightToBracket,faUserPlus,faArrowRightLong,faEnvelope,faPhone,fa
 import { faInstagram,faLinkedin,faSquareFacebook,faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { useState } from "react";
 function Home() {
+  const API_URL=import.meta.env.VITE_API_URL;
   const navigate=useNavigate();
   const [email,setEmail]=useState("");
   const [btnText,setBtnText]=useState("Subscribe");
@@ -18,7 +19,7 @@ function Home() {
     {
       try 
       {
-        const res = await fetch("http://localhost:5000/api/subscribe/newsletter", {
+        const res = await fetch(`${API_URL}/api/subscribe/newsletter`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body:JSON.stringify({receiverEmail:email})
@@ -44,7 +45,7 @@ function Home() {
             <h2 className={styles.logo} onClick={()=>{navigate("/")}}>Blood Donars</h2>
         </div>
         <div className={styles.navLinks}>
-          <a onClick={()=>{navigate('/Form')}}>Register Yourself</a>
+          <a onClick={()=>{navigate('/Form')}}>Register</a>
           <a href="#aboutus">About Us</a>
           <Link to="/Auth/login">
             <FontAwesomeIcon icon={faArrowRightToBracket} style={{color: "#c92f3b",marginRight:4}} />

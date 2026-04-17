@@ -4,6 +4,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
 
 function Login(){
+    const API_URL=import.meta.env.VITE_API_URL;
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [error,setError]=useState(false);
@@ -22,7 +23,7 @@ function Login(){
         setLoading(true);
 
         try {
-        const res = await fetch("http://localhost:5000/api/Login", {
+        const res = await fetch(`${API_URL}/api/Login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)
@@ -40,6 +41,7 @@ function Login(){
         setUser(data.user);
         navigate(from, { replace: true });
         } catch (error) {
+            console.log(error);
             setError(true);
         } finally {
         setLoading(false);

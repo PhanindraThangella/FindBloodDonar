@@ -170,7 +170,7 @@ function FullDetailsForm(){
     "Vemula","Veerapunayunipally","Vontimitta","Yerraguntla"
   ]
 };
-
+const API_URL=import.meta.env.VITE_API_URL
 const districts = Object.keys(data);
   const navigate=useNavigate();
   const [error,setError]=useState(false);
@@ -205,12 +205,11 @@ const districts = Object.keys(data);
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
       const resultState= await sendToBackend(latitude,longitude);
-      console.log(latitude,longitude);
       setGrantLocation(resultState.success);
     });
   };
   const sendToBackend=async(latitude,longitude)=>{
-    const res=await fetch("http://localhost:5000/api/user/storegeoLocation", {
+    const res=await fetch(`${API_URL}/api/user/storegeoLocation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -234,7 +233,6 @@ const districts = Object.keys(data);
     .then(async(result)=>{
       flag=true;
       const resultState= await sendToBackend(result.latitude,result.longitude);
-      console.log(result.latitude,result.longitude);
       setDenyLocation(resultState.success);
     }).catch((err)=>{
         console.error(err.message);
@@ -243,7 +241,6 @@ const districts = Object.keys(data);
       getCoordsFromAddress(address2)
       .then(async(result)=>{
         const resultState= await sendToBackend(result.latitude,result.longitude);
-        console.log(result.latitude,result.longitude);
         setDenyLocation(resultState.success);
       }).catch((err)=>{
         console.error(err.message);
@@ -287,10 +284,9 @@ const districts = Object.keys(data);
   const handleSubmit =async(e) => {
     const token=localStorage.getItem('token');
     e.preventDefault();
-    // console.log("Form Values:", formData);
     var res;
     try {
-      res = await fetch("http://localhost:5000/api/addDetailsOfUser", {
+      res = await fetch(`${API_URL}/api/addDetailsOfUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -329,27 +325,7 @@ const districts = Object.keys(data);
             setIsVisible(true);
             setIsFailed(true);
             setIsSuccess(false);
-        }
-
-      // if (!response.ok) {
-      //   alert("Internal Failure,Sorry For Inconvenience.");
-      // }
-    //   if(response.status===400)
-    //   {
-    //     setError(true);
-
-    //   }
-    //   if(response.status===401 || response.status===403)
-    //   {
-    //     navigate("/Auth");
-    //   }
-    //   if(response.ok)
-    //   {
-    //     navigate('/');
-    //   }
-    // } catch (error) {
-    //   alert("Error Submiting Form Try Again.");
-    // }
+    }
   };
   const closeModal=()=>{
     setIsVisible(!isVisible);

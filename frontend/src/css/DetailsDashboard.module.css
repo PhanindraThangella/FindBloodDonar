@@ -13,6 +13,7 @@
 /* NAVBAR */
 .navbar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
@@ -30,6 +31,9 @@
   align-items: center;
   gap: 10px;
   margin-left: 40px;
+}
+.leftNav:hover{
+  cursor: pointer;
 }
 
 .logo,
@@ -127,7 +131,9 @@
   background: #457b9d;
   color: white;
 }
-
+.sortdiv{
+  display: none;
+}
 /* ========================= */
 /* MAIN CONTENT */
 /* ========================= */
@@ -212,12 +218,11 @@
 .userscard p {
   margin: 12px 0;
 }
-
-.userscard h2 {   
-  text-align: center;
-}
-
 /* BUTTON */
+.userdetailsbtndiv{
+  display: flex;
+  justify-content:center;
+}
 .usersdetailsbtn {
   width: 150px;
   height: 40px;
@@ -237,7 +242,19 @@
   transform: scale(1.08);
   box-shadow: 0px 6px 12px rgba(0, 91, 181, 0.4);
 }
-
+.nouserdiv {
+  width:900px;
+  margin:auto;
+  background-color:white;
+  height:300px;
+  border-radius:10px;
+  text-align:center;
+}
+.nouserdiv h1{
+  margin-top: 100px;
+  text-align: center;
+  /* font-size: large; */
+}
 /* ========================= */
 /* PROFILE / NAV RIGHT */
 /* ========================= */
@@ -273,6 +290,7 @@
 .rightNav {
   display: flex;
   flex-direction: row;
+  justify-content: end;
 }
 
 .detailsbtn {
@@ -283,4 +301,239 @@
   color: white;
   border-radius: 10px;
   border: none;
+}
+/* ================================================= */
+/* ========= PRODUCTION MOBILE RESPONSIVE =========== */
+/* ================================================= */
+
+/* ================= TABLET ================= */
+@media (max-width: 1024px) {
+
+  .searchBar select {
+    width: 220px;
+  }
+
+  .sidebar {
+    width: 180px;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* ================= ROOT FIX ================= */
+  .wrapper {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  /* ================= NAVBAR ================= */
+  .navbar {
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+  .brand {
+    font-size: 18px;
+  }
+
+  /* ================= SEARCH (PRIMARY ACTION) ================= */
+  .searchBar {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    order:3;
+  }
+  .leftNav{
+    order:1;
+    margin:0px;
+  }
+
+  .searchBar select {
+    margin-left:20px;
+    width: 60%;
+    height: 38px;
+  }
+
+  .searchBtn {
+    padding: 8px 12px;
+    border-radius: 10px;
+  }
+
+  /* ================= RIGHT NAV ================= */
+  .rightNav {
+    display: flex;
+    width: 50%;
+    order:2;
+  }
+  .profileImage {
+    margin-left: 15px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background-color: black;
+  }
+  .profileImage img{
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+  }
+  .logoutBtn {
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: white;
+    color:black;
+  }
+
+  .profileMenu {
+    align-items: center;
+  }
+
+  .profileMenu a {
+    font-size: 13px;
+  }
+
+  /* ================= LAYOUT ================= */
+  .container {
+    flex-direction: column;
+  }
+
+  /* ================= SIDEBAR → FILTER BAR ================= */
+  .sidebar {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0px;
+    background: #1d3557;
+  }
+
+  .menu {
+    display: flex;
+    gap: 10px;
+  }
+
+  .menu a {
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 0px;
+  }
+  .menu a:active{
+    background: #457b9d;
+  }
+  .menu a:is(:nth-child(4), :nth-child(5), :nth-child(6)) { 
+    display: none; 
+  }
+  .sortdiv{
+    display: block;
+  }
+  .sortsubdiv{
+    float:right;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+  }
+  .sortsubdiv select{
+    width:100px;
+    height:25px;
+    padding:4px;
+    border-radius:20px;
+    margin:2px 20px;
+    font-weight: 700;
+  }
+
+  /* ================= MAIN ================= */
+  .main {
+    padding: 15px;
+  }
+
+  .heading {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  /* ================= DASHBOARD CARDS ================= */
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* ================= USERS ================= */
+  .userscards {
+    grid-template-columns: 1fr;
+  }
+
+  .userscard {
+    max-width: 100%;
+    padding: 15px;
+    background-color: #fff;
+    border:none;
+    box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+  }
+
+  .userscard h3 {
+    font-size: 18px;
+    /* text-align: center; */
+  }
+
+  .userscard p {
+    font-size: 13px;
+    margin:7px;
+  }
+  .userdetailstable{
+    width:300px;
+    /* background-color: red; */
+  }
+
+  /* ================= BUTTON FIX ================= */
+  .usersdetailsbtn {
+    float: none;
+    width: 60%;
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+  /* =================== No Users Found Div =======*/
+  .nouserdiv {
+    width:300px;
+    margin:auto;
+    background-color:white;
+    height:100px;
+    border-radius:10px;
+    text-align:center;
+  }
+  .nouserdiv h1{
+    margin-top: 30px;
+    font-size: large;
+  }
+
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .brand {
+    font-size: 16px;
+  }
+
+  .searchBtn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .logoutBtn {
+    background-color:white;
+    color:black;
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .profileMenu a {
+    font-size: 12px;
+  }
+
+  .userscard h3 {
+    font-size: 16px;
+  }
+
 }

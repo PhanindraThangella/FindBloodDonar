@@ -31,12 +31,14 @@ function Authorization(){
     }   
     return (
         <>
-            <div className={styles.lognavbar}>
+            <div className={styles.backtoHome}>
                 <FontAwesomeIcon icon={faCircleArrowLeft} size="xl" style={{color: "rgb(0, 0, 0)",marginLeft:15}} /><a onClick={()=>{
                     navigate("/")
                 }}
                 className={styles.backthbtn}
                 >Back to home</a>
+            </div>
+            <div className={styles.lognavbar}>
                 <button className={styles.loginbtn} onClick={handleLoginClick}>Login</button>
                 <button className={styles.signUpbtn} onClick={handleSignupClick}>Sign Up</button>
             </div>

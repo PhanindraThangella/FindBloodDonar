@@ -82,3 +82,84 @@ input:checked + .sliderRound:before {
 {
     margin: 40px 0px 20px 40px;
 }
+/* ================================================= */
+/* ========= SETTINGS PAGE RESPONSIVE ============== */
+/* ================================================= */
+
+/* ================= TABLET ================= */
+@media (max-width: 1024px) {
+
+  .eachNotificationDiv {
+    width: 100%;
+  }
+
+  .switch {
+    margin-left: auto;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* MAIN FIX */
+  .mainDiv {
+    height: auto;
+    padding: 10px;
+  }
+
+  /* CARD */
+  .settingsDiv {
+    margin: 20px 10px;
+    padding: 10px;
+  }
+
+  /* TITLE */
+  .notifTag {
+    margin: 20px 0 10px 10px;
+    font-size: 20px;
+  }
+
+  /* EACH ROW */
+  .eachNotificationDiv {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* LABEL */
+  .notificationLabel {
+    margin: 0;
+    width: auto;
+    font-size: 14px;
+  }
+
+  /* SWITCH FIX (IMPORTANT) */
+  .switch {
+    margin: 0;
+  }
+
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .notificationLabel {
+    font-size: 13px;
+  }
+
+  .switch {
+    width: 50px;
+    height: 24px;
+  }
+
+  .sliderRound:before {
+    height: 18px;
+    width: 18px;
+  }
+
+}

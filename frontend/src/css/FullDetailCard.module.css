@@ -17,9 +17,9 @@
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 500px;
+  max-width: 550px;
   width: 90%;
-  height:330px;
+  height:350px;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
   display:flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
 .userdata{
     display: flex;
     flex-direction: row;
-    height:220px;
+    height:260px;
     /* width:calc(100vh-200px); */
     margin-top:10px;
     /* border: 2px solid red; */
@@ -63,13 +63,27 @@
 }
 .userdetails{
     /* border: 2px solid black; */
-    height:220px;
+    height:260px;
     margin-left:15px;
 }
+.userdetails p{
+    margin:6px;
+}
+.userdetailstable h3 {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds '...' if the name is too long */
+    white-space: nowrap;
+    margin: 0;
+}
+.userdetailstable{
+  width:300px;
+  table-layout: fixed; /* Crucial: This stops content from pushing columns */
+  width: 100%;
+  border-collapse: collapse;
+}
 .popupbtn{
-    /* border: 2px solid green; */
     height:50px;
-    margin-top: 20px;
 }
 .notification
 {
@@ -106,4 +120,99 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight:600;
     text-align: left;
+}
+/* ================================================= */
+/* ======== POPUP HTML ALIGNED RESPONSIVE ========== */
+/* ================================================= */
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* POPUP CONTAINER */
+  .popup {
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 15px;
+  }
+
+  /* USER DATA STACK */
+  .userdata {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: auto;
+  }
+
+  /* IMAGE FIX */
+  .userImg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .userImg img {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* DETAILS CENTER */
+  .userdetails {
+    margin-left: 0;
+    /* text-align: center; */
+    height:200px;
+  }
+
+  .userdetails h3 {
+    margin-bottom: 5px;
+  }
+
+  .userdetails p {
+    font-size: 14px;
+    margin: 4px 0;
+  }
+
+  /* BUTTONS STACK */
+  .popupbtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    height: auto;
+  }
+
+  .notification,
+  .mailbtn {
+    margin-left: 0;
+    width: 90%;
+    max-width: 260px;
+    font-size: 16px;
+  }
+
+  /* CLOSE BUTTON */
+  .closebtn {
+    font-size: 14px;
+  }
+
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .userImg {
+    width: 100px;
+    height: 100px;
+  }
+
+  .userImg img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .notification,
+  .mailbtn {
+    font-size: 14px;
+    height: 36px;
+  }
+
 }

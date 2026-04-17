@@ -61,3 +61,29 @@
     color:#c92f3b;
     border:1px solid #c92f3b;
 }
+/* ================================================= */
+/* ============ LOGIN MODAL RESPONSIVE ============== */
+/* ================================================= */
+
+@media (max-width: 768px) {
+
+  .logindiv {
+    top:42%;
+    width:350px;
+  }
+
+  .logindiv h2 {
+    font-size: 20px;
+  }
+
+  .logindiv input {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .logindiv button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+}

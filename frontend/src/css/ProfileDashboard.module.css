@@ -158,3 +158,150 @@ hr{
     width:82%;
     margin-left:40px;
 }
+/* ================================================= */
+/* ======== PROFILE DETAILS RESPONSIVE FIX ========= */
+/* ================================================= */
+
+/* ================= TABLET ================= */
+@media (max-width: 1024px) {
+
+  .inputElement {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .datalabeldiv label {
+    width: 140px;
+    font-size: 18px;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* MAIN */
+  .mainContainer {
+    padding: 10px;
+  }
+
+  /* TOP SECTION */
+  .topNotch {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    margin: 20px;
+    padding: 20px 10px;
+  }
+
+  /* PROFILE IMAGE */
+  .imageDiv {
+    margin: 0;
+    width: 120px;
+    height: 120px;
+  }
+
+  .imageDiv img {
+    width: 108px;
+    height: 108px;
+  }
+
+  /* STATS */
+  .donatedDiv,
+  .receivedDiv {
+    margin: 10px 0;
+    width: 80%;
+    height: auto;
+    padding: 15px 0;
+  }
+
+  .number {
+    font-size: 32px;
+  }
+
+  .times {
+    font-size: 14px;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+
+  /* FORM CONTAINER */
+  .bottomMain {
+    margin: 20px;
+    padding: 10px;
+  }
+
+  /* EDIT BUTTON */
+  .editButton {
+    float: none;
+    margin: 10px auto;
+    font-size: 16px;
+  }
+
+  .editButtonDiv {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* FORM STACK */
+  .datalabeldiv {
+    margin: 15px 10px;
+    height: auto;
+  }
+
+  .datalabeldiv label {
+    display: block;
+    width: 100%;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+  }
+
+  .inputElement {
+    width: 100%;
+    max-width: 100%;
+    margin: 5px 0;
+  }
+
+  hr {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* SUBMIT BUTTON */
+  .submitButton {
+    width: 100%;
+    max-width: 250px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .imageDiv {
+    width: 100px;
+    height: 100px;
+  }
+
+  .imageDiv img {
+    width: 88px;
+    height: 88px;
+  }
+
+  .number {
+    font-size: 26px;
+  }
+
+  .inputElement {
+    font-size: 13px;
+  }
+
+  .submitButton {
+    font-size: 16px;
+  }
+
+}

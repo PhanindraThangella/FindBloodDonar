@@ -2,6 +2,7 @@ import {useState} from'react';
 import {useNavigate} from 'react-router-dom';
 import styles from '../css/SignUp.module.css';
 function SignUp({handleLoginClick}){
+    const API_URL=import.meta.env.VITE_API_URL;
     const navigate=useNavigate();
     const [formData,setFormData]=useState({name:"",email:"",newPassword:"",conformPassword:""});
     const [touched,setTouched]=useState(false);
@@ -18,7 +19,7 @@ function SignUp({handleLoginClick}){
         setLoading(true);
 
         try {
-        const res = await fetch("http://localhost:5000/api/add-user", {
+        const res = await fetch(`${API_URL}/api/add-user`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)

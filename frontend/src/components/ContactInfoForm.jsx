@@ -4,6 +4,7 @@ import {useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck,faCircleXmark,faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 function ContactInfoForm(){
+    const API_URL=import.meta.env.VITE_API_URL;
     const navigate=useNavigate();
     const location = useLocation();
     const sendState = location.state?.sendState;
@@ -30,7 +31,7 @@ function ContactInfoForm(){
             var res;
             try 
             {
-                res = await fetch("http://localhost:5000/api/send-email-to-donor", {
+                res = await fetch(`${API_URL}/api/send-email-to-donor`, {
                     method: "POST",
                     
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -38,7 +39,6 @@ function ContactInfoForm(){
                     },
                     body: JSON.stringify(formData)
                 });
-                console.log(res);
                 if(res.status==200)
                 {
                     setMessage("Success");
@@ -58,7 +58,6 @@ function ContactInfoForm(){
                     }, 2000);
                 }
                 else{
-                    console.log(res);
                     setMessage("Failed");
                     setIsFailed(true);
                     setIsSuccess(false);
@@ -66,7 +65,6 @@ function ContactInfoForm(){
             }
             catch(error)
             {
-                console.log(error);
                 setMessage("Failed");
                 setIsFailed(true);
                 setIsSuccess(false);

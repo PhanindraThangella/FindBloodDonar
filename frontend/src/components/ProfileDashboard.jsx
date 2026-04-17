@@ -3,6 +3,7 @@ import styles from '../css/ProfileDashboard.module.css';
 import { UserPen,PencilOff } from 'lucide-react';
 function ProfileDashboard()
 {
+    const API_URL=import.meta.env.VITE_API_URL;
     const [isDisabled,setIsDisabled]=useState(true);
     const [data,setData]=useState({});
     const token=localStorage.getItem("token");
@@ -13,8 +14,7 @@ function ProfileDashboard()
     },[]);
     async function fetchData(){
         try{
-            console.log("effect");
-            const res=await fetch("http://localhost:5000/api/User",{
+            const res=await fetch(`${API_URL}/api/User`,{
                 method:"GET",
                 headers:{
                     "Content-Type":"application/json",
@@ -46,14 +46,13 @@ function ProfileDashboard()
     const handleSubmit=async()=>{
         setLoading(true);
         try {
-        const res = await fetch("http://localhost:5000/api/UpdateProfile", {
+        const res = await fetch(`${API_URL}/api/UpdateProfile`, {
             method: "POST",
             headers: { "Content-Type": "application/json",
                 "Authorization":`Bearer ${token}`,
              },
             body: JSON.stringify(data)
         });
-        console.log(res.status);
         if(res.ok)
         {
             fetchData();

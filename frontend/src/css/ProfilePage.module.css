@@ -77,3 +77,93 @@ a:hover{
     height:100vh;   
     overflow-y: auto;
 }
+/* ================================================= */
+/* ========= PROFILE PAGE RESPONSIVE ================= */
+/* ================================================= */
+
+/* TABLET */
+@media (max-width: 1024px) {
+
+  .sidenavbar {
+    width: 30%;
+  }
+
+  .mainContent {
+    width: 70%;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* MAIN LAYOUT STACK */
+  .profileContainer {
+    flex-direction: column;
+    height: auto;
+  }
+
+  /* SIDEBAR → TOP NAV */
+  .sidenavbar {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-right: none;
+  }
+
+  /* MENU → HORIZONTAL SCROLL */
+  .listContainer {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .listContainer li {
+    margin: 0;
+    padding: 8px 12px;
+    white-space: nowrap;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    font-size: 14px;
+  }
+  /* REMOVE FIXED LOGOUT */
+  .logoutbutton {
+    position: static;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  .logoutli {
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  /* MAIN CONTENT */
+  .mainContent {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+  }
+  a{
+    padding-left:0px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .listContainer li {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .logoutli {
+    font-size: 13px;
+  }
+
+}
