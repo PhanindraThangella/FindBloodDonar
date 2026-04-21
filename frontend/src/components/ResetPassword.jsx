@@ -13,60 +13,72 @@ function ResetPassword(){
     const [isInvalid, setIsInvalid] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [isFailed, setIsFailed] = useState(false);
+    const [showPasswordRules,setShowPasswordRules]=useState(false);
     const [message,setMessage]=useState("");
+    const [showPassword,setShowPassword]=useState(false);
     const passwordMatched=formData.newPassword === formData.conformPassword;
     useEffect(() => {
     }, [isVisible,isSuccess,isInvalid,isFailed]);
     const handleSubmit=async(event)=>{
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         event.preventDefault();
         var res;
-        try{
-            res=await fetch(`${API_URL}/api/user/updatePassword`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body:JSON.stringify(formData)
-            });
-        }
-        catch(error){
-            setMessage("Failed");
-            setIsVisible(true);
-            setIsFailed(true);
-            setIsSuccess(false);
-            setIsInvalid(false);
-        }
-        if(res.status==200)
-        {
-            setMessage("Success");
-            setIsVisible(true);
-            setIsSuccess(true);
-            setIsInvalid(false);
-            setIsFailed(false);
-            setTimeout(()=>{
-                setMessage("Redirecting.");
-            },800);
-            setTimeout(()=>{
-                setMessage("Redirecting..");
-            },1200);
-            setTimeout(()=>{
-                setMessage("Redirecting...");
-            },1600);
-            setTimeout(() => {
-                navigate("/Auth/login");
-            }, 2000);
-        }
-        else if(res.status==401){
-            setMessage("Invalid Email");
-            setIsVisible(true);
-            setIsSuccess(false);
-            setIsInvalid(true);
-            setIsFailed(false);
+        if(passwordRegex.test(formData.newPassword)){
+            try{
+                res=await fetch(`${API_URL}/api/user/updatePassword`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body:JSON.stringify(formData)
+                });
+            }
+            catch(error){
+                setMessage("Failed");
+                setIsVisible(true);
+                setIsFailed(true);
+                setIsSuccess(false);
+                setIsInvalid(false);
+                setShowPasswordRules(false);
+            }
+            if(res.status==200)
+            {
+                setMessage("Success");
+                setIsVisible(true);
+                setIsSuccess(true);
+                setIsInvalid(false);
+                setShowPasswordRules(false);
+                setIsFailed(false);
+                setTimeout(()=>{
+                    setMessage("Redirecting.");
+                },800);
+                setTimeout(()=>{
+                    setMessage("Redirecting..");
+                },1200);
+                setTimeout(()=>{
+                    setMessage("Redirecting...");
+                },1600);
+                setTimeout(() => {
+                    navigate("/Auth/login");
+                }, 2000);
+            }
+            else if(res.status==401){
+                setMessage("Invalid Email");
+                setIsVisible(true);
+                setIsSuccess(false);
+                setIsInvalid(true);
+                setShowPasswordRules(false);
+                setIsFailed(false);
+            }
+            else{
+                setMessage("Failed");
+                setIsVisible(true);
+                setIsFailed(true);
+                setIsSuccess(false);
+                setShowPasswordRules(false);
+                setIsInvalid(false);
+            }
         }
         else{
-            setMessage("Failed");
-            setIsVisible(true);
-            setIsFailed(true);
-            setIsSuccess(false);
-            setIsInvalid(false);
+            alert("Invalid password format!.");
         }
     }
     const handleChange = (e) => {
@@ -78,6 +90,17 @@ function ResetPassword(){
     const closeModal=()=>{
         setIsVisible(!isVisible);
     };
+    const togglePassword = () => {
+        setShowPassword(prev => !prev);
+    };
+    const handleShowRules=()=>{
+        setShowPasswordRules(true);
+        setIsVisible(true);
+        setIsFailed(false);
+        setIsInvalid(false);
+        setIsSuccess(false);
+        setMessage("");
+    }
     return(
         <>
             <div className={styles.resetPassDiv}>
@@ -85,13 +108,14 @@ function ResetPassword(){
                 <h2>Reset Password</h2>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="Email">Email:</label>
-                    <input type="email"  id="Email" name='email' value={formData.email} onChange={handleChange} required></input>
+                    <input type="email"  id="Email" name='email' value={formData.email} placeholder='Enter email address' onChange={handleChange} required></input>
                     <label htmlFor="newPassword">New Password:</label>
-                    <input type="password"  id="newPassword" name='newPassword' value={formData.newPassword} onChange={handleChange} required></input>
-                    <label htmlFor="conformPassword">Conform Password:</label>
-                    <input type="password"  id="conformPassword" name='conformPassword' value={formData.conformPassword} onChange={handleChange} onBlur={() => setTouched(true)}required></input>
+                    <div className={styles.passdiv}><input type={showPassword ? "text" : "password"}  id="newPassword" placeholder='Enter Your Password' name='newPassword' value={formData.newPassword} onChange={handleChange} required></input>{showPassword ?<span onClick={togglePassword} className={`material-symbols-outlined ${styles.togglePasswordIcon}`}>visibility_off</span>:<span onClick={togglePassword} className={`material-symbols-outlined ${styles.togglePasswordIcon}`}>visibility</span>}</div>
+                    <label htmlFor="conformPassword">Confirm Password:</label>
+                    <div className={styles.passdiv}><input type={showPassword ? "text" : "password"}  id="conformPassword" placeholder='ReEnter Your Password' name='conformPassword' value={formData.conformPassword} onChange={handleChange} onBlur={() => setTouched(true)} required></input>{showPassword ?<span onClick={togglePassword} className={`material-symbols-outlined ${styles.togglePasswordIcon}`}>visibility_off</span>:<span onClick={togglePassword} className={`material-symbols-outlined ${styles.togglePasswordIcon}`}>visibility</span>}</div>
+                    <a className={styles.passRules} onClick={handleShowRules}>Password Rules</a>
                     {touched && formData.conformPassword &&(<p style={{margin:0,color:passwordMatched ?'green':'red'}}>{passwordMatched ? 'Matched ' : 'Not Matched '}</p>)}
-                    <button disabled={!passwordMatched} className={styles.submitButton} type="submit">Update</button>
+                    <button disabled={(!passwordMatched || !touched)} className={styles.submitButton} type="submit">Update</button>
                 </form>
             </div>
            {isVisible && 
@@ -107,17 +131,27 @@ function ResetPassword(){
                             )}
                             {isInvalid && (
                                 <>
-                                <span className={`material-symbols-outlined ${styles.modalInvalid}`}>error </span>
+                                <span className={`material-symbols-outlined ${styles.modalInvalid}`}>&#xe000; </span>
                                 <p className={styles.modalMessage}> Invalid Email</p>
                                 </>
                             )}
                             {isFailed && (
                                 <>
-                                <span className={`material-symbols-outlined ${styles.modalInvalid}`}>error </span>
+                                <span className={`material-symbols-outlined ${styles.modalInvalid}`}>&#xe000; </span>
                                 <p className={styles.modalMessage}> Failed</p>
                                 </>
                             )}
-
+                            {showPasswordRules &&(
+                                <>
+                                    <ul className={styles.passulelements}>
+                                        <li>Minimum 8 characters long.</li>
+                                        <li>Atleast 1 uppercase Alphabet</li>
+                                        <li>Atleast 1 lowercase Alphabet</li>
+                                        <li>Atleast 1 special symbols</li>
+                                        <li>Atleast 1 numeric digit</li>
+                                    </ul>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

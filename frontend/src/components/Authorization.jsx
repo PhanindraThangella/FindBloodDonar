@@ -9,41 +9,25 @@ function Authorization(){
     //State Declaration for validation and Athentication
     const {flag}=useParams();   
     const navigate=useNavigate();
-    const [isLogin,setIsLogin]=useState(false);
-    const [isSignup,setIsSignup]=useState(false);
-    useEffect(()=>{
-        if(flag==="login"){
-            setIsLogin(true);
-            setIsSignup(false);
-        }
-        else{
-            setIsLogin(false);
-            setIsSignup(true);
-        }
-    },[])
-    const handleLoginClick=()=>{
-        setIsLogin(true);
-        setIsSignup(false);
-    }
-    const handleSignupClick=()=>{
-        setIsLogin(false);
-        setIsSignup(true);
-    }   
     return (
         <>
-            <div className={styles.backtoHome}>
-                <FontAwesomeIcon icon={faCircleArrowLeft} size="xl" style={{color: "rgb(0, 0, 0)",marginLeft:15}} /><a onClick={()=>{
-                    navigate("/")
-                }}
-                className={styles.backthbtn}
-                >Back to home</a>
+            <div className={styles.authContianer}>
+                <div className={styles.backtoHome}>
+                    <FontAwesomeIcon icon={faCircleArrowLeft} size="xl" style={{color: "rgb(0, 0, 0)",marginLeft:15}} /><a onClick={()=>{
+                        navigate("/")
+                    }}
+                    className={styles.backthbtn}
+                    >Back to home</a>
+                </div>
+                <div className={styles.lognavbar}>
+                    <button className={styles.loginbtn} onClick={()=>{navigate("/Auth/login")}}>Login</button>
+                    <button className={styles.signUpbtn} onClick={()=>{navigate("/Auth/signup")}}>Sign Up</button>
+                </div>
+                <div className={styles.renderContent}>
+                    {flag==="login" &&<Login />}
+                    {flag==="signup" &&<SignUp />}
+                </div>
             </div>
-            <div className={styles.lognavbar}>
-                <button className={styles.loginbtn} onClick={handleLoginClick}>Login</button>
-                <button className={styles.signUpbtn} onClick={handleSignupClick}>Sign Up</button>
-            </div>
-            {isLogin &&<Login />}
-            {isSignup &&<SignUp handleLoginClick={handleLoginClick} />}
         </>
 
     );

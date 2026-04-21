@@ -6,13 +6,13 @@ const sendGmailToDonor=async(req,res)=>
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'knowntheunknown07@gmail.com',
-            pass: 'igmupbhuwigstnbm' // Use App Password or OAuth
+            user: 'findblooddonars@gmail.com',
+            pass: 'zwuoljyygkynekqv' // Use App Password or OAuth
         }
     });
 
     const mailOptions = {
-        from: 'knowntheunknown07@gmail.com',
+        from: 'findblooddonars@gmail.com',
         to: receiveremail ,
         subject:'URGENT BLOOD REQUIRED!',
         text: `HI There,\n I Hope You Are Well\nThere Is A Urgent Blood Requirement\nHere Is The Details\nAcceptor Name:${name}\nHosipital Name:${hospitalname}\nPhoneNumber:${contactnumber}\nAddress:${address}\nIf You Are Able To Bonate Blood Please Contact.\nTime Is Ticking,Each Minute Takes Life Of Needy`
@@ -38,13 +38,13 @@ const subscribeToNewsLetter=async(req,res)=>
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'knowntheunknown07@gmail.com',
-            pass: 'igmupbhuwigstnbm' // Use App Password or OAuth
+            user: 'findblooddonars@gmail.com',
+            pass: 'zwuoljyygkynekqv' // Use App Password or OAuth
         }
     });
 
     const mailOptions = {
-        from: 'knowntheunknown07@gmail.com',
+        from: 'findblooddonars@gmail.com',
         to: receiveremail ,
         subject:'Welcome to BloodDonors NewsLetter Service.',
         text: `Firstly Thanking you for subscribing to our news letter,\n We Hope You Are Well.\n From now onwards you will also walk through our journey and help us in making the world the best place to live.`

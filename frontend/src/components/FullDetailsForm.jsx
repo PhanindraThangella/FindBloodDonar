@@ -227,24 +227,30 @@ const districts = Object.keys(data);
   }
   const sendFallBackLocation=()=>{
     let flag=false;
-    const address1 = `${formData.houseno}, ${formData.city}, ${formData.district},${"Andhra Pradesh"}`;
-    const address2 = `${formData.city}, ${formData.district},${"Andhra Pradesh"}`;
-    getCoordsFromAddress(address1)
-    .then(async(result)=>{
-      flag=true;
-      const resultState= await sendToBackend(result.latitude,result.longitude);
-      setDenyLocation(resultState.success);
-    }).catch((err)=>{
-        console.error(err.message);
-      });
-    if(!flag){
-      getCoordsFromAddress(address2)
+    if(formData.district !== "" && formData.city !== "")
+    {
+      const address1 = `${formData.houseno}, ${formData.city}, ${formData.district},${"Andhra Pradesh"}`;
+      const address2 = `${formData.city}, ${formData.district},${"Andhra Pradesh"}`;
+      getCoordsFromAddress(address1)
       .then(async(result)=>{
+        flag=true;
         const resultState= await sendToBackend(result.latitude,result.longitude);
         setDenyLocation(resultState.success);
       }).catch((err)=>{
-        console.error(err.message);
-      });
+          console.error(err.message);
+        });
+      if(!flag){
+        getCoordsFromAddress(address2)
+        .then(async(result)=>{
+          const resultState= await sendToBackend(result.latitude,result.longitude);
+          setDenyLocation(resultState.success);
+        }).catch((err)=>{
+          console.error(err.message);
+        });
+      }
+    }
+    else{
+      alert("Please select location details first!.");
     }
   }
   const getCoordsFromAddress = async (address) => {
@@ -484,9 +490,9 @@ const districts = Object.keys(data);
                     </fieldset>
                     <div>
                       {error && <p style={{color:"red",margin:0,textDecoration:'none'}}>Email Already Exsists</p>}
-                      <button className={styles.buttonSubmit} type="submit" disabled={!formData.contest}>Submit</button>
+                      <button className={styles.buttonSubmit} type="submit" disabled={!formData.contest || !(grantLocation || denyLocation)}>Submit</button>
                       
-                      <button className={styles.buttonGoHome} type="button" onClick={()=>{navigate("/")}}>Go To Home</button>
+                      <button className={styles.buttonGoHome} type="button" onClick={()=>{navigate("/dashboard")}}>Go To Home</button>
                     </div>
                 </form>
             </div>
@@ -507,7 +513,6 @@ const districts = Object.keys(data);
                               <p className={styles.modalMessage}> Failed</p>
                               </>
                           )}
-
                       </div>
                   </div>
               </div>

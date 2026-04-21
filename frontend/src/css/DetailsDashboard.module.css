@@ -423,7 +423,7 @@
   .menu a:active{
     background: #457b9d;
   }
-  .menu a:is(:nth-child(4), :nth-child(5), :nth-child(6)) { 
+  .menu a:is(:nth-child(5), :nth-child(6), :nth-child(7)) { 
     display: none; 
   }
   .sortdiv{
@@ -452,6 +452,13 @@
   .heading {
     font-size: 18px;
     text-align: center;
+  }
+  .card p{
+    text-align: center;
+  }
+  .card h4{
+    font-weight: 600;
+    font-size: large;
   }
 
   /* ================= DASHBOARD CARDS ================= */

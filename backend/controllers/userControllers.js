@@ -6,8 +6,14 @@ const bcrypt =require('bcrypt');
 const jwt=require('jsonwebtoken');
 const getUser=async(req,res)=>{
     const user=req.user.userId;
-    const results= await userBloodDetailsSchema.findOne({UserId:user});
-    res.json(results);
+    const result= await userBloodDetailsSchema.findOne({UserId:user});
+    if(result){
+      res.status(200).json(result);
+    }
+    else{
+      res.status(500).json({message:"No user found with matching details"});
+    }
+    
 };
 const getUsers=async(req,res)=>{
   const groups = req.query?.group.split(",");

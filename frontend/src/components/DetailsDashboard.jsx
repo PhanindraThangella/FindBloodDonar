@@ -166,6 +166,7 @@ function DetailsDashboard(){
                 {/* SIDEBAR */}
                 <div className={styles.sidebar}>
                     <div className={styles.menu}>
+                        <a href="#" onClick={()=>{navigate("/Form")}}>Register Donor</a>
                         <a href="#" onClick={()=>{navigate("/Profile")}}>Your Requests</a>
                         <a href="#" onClick={getSubstituteGroupDetails}>Substitute BloodGroup</a>
                         <a href="#" onClick={()=>{alert("Coming Soon!.")}}>Contact All</a>

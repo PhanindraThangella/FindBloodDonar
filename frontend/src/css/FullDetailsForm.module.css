@@ -345,6 +345,11 @@
   }
 
   /* MODAL FIX */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
   .modal {
     left: 50%;
     top: 50%;
@@ -352,18 +357,25 @@
     width: 90%;
     max-width: 320px;
     height: auto;
-    padding: 10px;
+    padding: 15px;
   }
 
   .modalMain {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     text-align: center;
   }
 
   .modalMessage {
-    margin: 10px 0 0;
-    font-size: 18px;
+    margin-top:10px;
+    margin-left:5px;
+    font-size: 22px;
+  }
+  .modalInvalid{
+    margin:10px;
+  }
+  .modalSuccess{
+    margin:10px;
   }
 
 }
@@ -383,5 +395,7 @@
   .buttonGoHome {
     font-size: 14px;
   }
-
+  .modalMessage { 
+    font-size: 16px;
+  }
 }

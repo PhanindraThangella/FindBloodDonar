@@ -158,6 +158,29 @@ hr{
     width:82%;
     margin-left:40px;
 }
+.noDataFound{
+  width:94%;
+  height:230px;
+  margin:70px 30px;
+  /* background-color: rgba(255,255,255,0.2); */
+  background-color: white;
+  backdrop-filter:blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+  border-radius:30px;
+}
+.noDataFound h1{
+  text-align: center;
+  margin-top:50px;
+}
+.noDataFound span{
+  color:blue;
+  text-decoration: underline;
+}
+.noDataFound span:hover{
+  cursor:pointer;
+}
+
 /* ================================================= */
 /* ======== PROFILE DETAILS RESPONSIVE FIX ========= */
 /* ================================================= */
@@ -275,6 +298,15 @@ hr{
     max-width: 250px;
     height: 50px;
     font-size: 18px;
+  }
+  .noDataFound{
+    width:94%;
+    height:300px;
+    margin:20px 10px;
+  }
+  .noDataFound h1{
+    margin-top:100px;
+    font-size: larger;
   }
 
 }
